@@ -1,14 +1,14 @@
 import React from "react";
-import Clock from "../shared/Clock/Clock";
-import ComponentAtRightBottom from "../shared/ComponentAtRightBottom/ComponentAtRightBottom";
+// import ComponentAtRightBottom from "../shared/ComponentAtRightBottom/ComponentAtRightBottom";
+// import Clock from '../shared/Clock/Clock';
 import FilterableProducts from "./FilterableProducts/FilterableProducts";
 
-const Home = (props) => {
+const Caffe = (props) => {
   return (
     <>
-      <ComponentAtRightBottom>
+      {/* <ComponentAtRightBottom>
         <Clock />
-      </ComponentAtRightBottom>
+      </ComponentAtRightBottom> */}
       <div className="row">
         <div className="col">
           <FilterableProducts />
@@ -18,4 +18,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default Caffe;
