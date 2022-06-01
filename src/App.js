@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Caffe from "./components/Caffe/Caffe";
+import ChitChat from "./components/ChitChat/ChitChat";
 import NavBar from "./components/NavBar/NavBar";
 import AppRoutes from "./constants/AppRoutes";
 
@@ -14,7 +15,7 @@ function App() {
             <Routes>
               <Route exact path={AppRoutes.Home} element={<Caffe />} />
               <Route exact path={AppRoutes.Caffe} element={<Caffe />} />
-              <Route exact path={AppRoutes.ChitChat} element={<Caffe />} />
+              <Route exact path={AppRoutes.ChitChat} element={<ChitChat />} />
             </Routes>
           </div>
         </div>

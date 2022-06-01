@@ -6,6 +6,7 @@
   /* flex layout */
   display: flex;
   align-items: center;
+  z-index: 999;
 }
 
 .navbar > span {
