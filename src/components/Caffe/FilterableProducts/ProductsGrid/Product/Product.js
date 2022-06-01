@@ -16,7 +16,7 @@ const Product = (props) => {
         <div> {product.price} </div>
         <div> {product.stocked ? "In Stock" : "Out Of Stock"} </div>
       </div>
-      <p className="addToCartButton">Add To Cart</p>
+      <p className="addToCartButton">Order Now</p>
     </div>
   );
 };
