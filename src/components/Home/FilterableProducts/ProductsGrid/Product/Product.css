@@ -1,0 +1,22 @@
+.productName {
+  background-color: #efefef;
+  margin: 2px;
+  padding: 0 px;
+}
+
+.addToCartButton {
+  background: #f4f4f468;
+  text-align: center;
+  transform: translateY(-190px);
+  cursor: pointer;
+}
+
+.addToCartButton:hover {
+  background-color: #eeeeeeee;
+  font-weight: bold;
+  padding: 2px;
+}
+
+.addToCartButton:active {
+  background-color: rgba(113, 234, 255, 0.858);
+}
