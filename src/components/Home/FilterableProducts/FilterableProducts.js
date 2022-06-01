@@ -1,39 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchBar from "../../shared/SearchBar/SearchBar";
 import ProductsGrid from "./ProductsGrid/ProductsGrid";
 
-class FilterableProducts extends React.Component {
-  state = {
-    searchText: "",
-    products: PRODUCTS,
+const FilterableProducts = (props) => {
+  const [searchText, setSearchText] = useState("");
+  const [products, setProducts] = useState(PRODUCTS);
+
+  const onSearchTextChange = (text) => {
+    setSearchText(text);
+    setProducts(filteredProducts(text));
   };
 
-  onSearchTextChange = (text) => {
-    this.setState({
-      searchText: text,
-      products: this.filteredProducts(text),
-    });
-  };
-
-  filteredProducts = (text) => {
+  const filteredProducts = (text) => {
     return PRODUCTS.filter((x) =>
       x.name.toLowerCase().includes(text.toLowerCase())
     );
   };
 
-  render() {
-    const { products } = this.state;
-    return (
-      <div>
-        <SearchBar
-          text={this.state.searchText}
-          change={this.onSearchTextChange}
-        />
-        <ProductsGrid products={products} />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <SearchBar text={searchText} change={onSearchTextChange} />
+      <ProductsGrid products={products} />
+    </div>
+  );
+};
 
 export default FilterableProducts;
 

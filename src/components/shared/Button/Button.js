@@ -1,25 +1,37 @@
 import React from "react";
 
-class Button extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const Button = (props) => {
+  const { change } = props; // callback to act upon button click!
 
-  shouldComponentUpdate(nextProps) {
-    const { change: currentChange } = this.props;
-    const { change: nextChange } = nextProps;
+  return (
+    <button type="button" className="btn btn-sm btn-success" onClick={change}>
+      {props.children}
+    </button>
+  );
+};
 
-    return currentChange !== nextChange;
-  }
+/// depricated
 
-  render() {
-    const { change } = this.props;
-    return (
-      <button type="button" onClick={change}>
-        {this.props.children}
-      </button>
-    );
-  }
-}
+// class Button extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
+
+//   shouldComponentUpdate(nextProps) {
+//     const { change: currentChange } = this.props;
+//     const { change: nextChange } = nextProps;
+
+//     return currentChange !== nextChange;
+//   }
+
+//   render() {
+//     const { change } = this.props;
+//     return (
+//       <button type="button" onClick={change}>
+//         {this.props.children}
+//       </button>
+//     );
+//   }
+// }
 
 export default Button;
