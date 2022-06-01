@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Caffe from "./components/Caffe/Caffe";
 import NavBar from "./components/NavBar/NavBar";
+import AppRoutes from "./constants/AppRoutes";
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
         <div className="row d-flex justify-content-center">
           <div className="col-sm-9 col-md-7">
             <Routes>
-              <Route exact path={"/"} element={<Caffe />} />
-              <Route exact path={"/caffe"} element={<Caffe />} />
+              <Route exact path={AppRoutes.Home} element={<Caffe />} />
+              <Route exact path={AppRoutes.Caffe} element={<Caffe />} />
+              <Route exact path={AppRoutes.ChitChat} element={<Caffe />} />
             </Routes>
           </div>
         </div>

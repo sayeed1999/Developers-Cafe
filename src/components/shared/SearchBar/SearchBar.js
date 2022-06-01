@@ -17,12 +17,25 @@ const SearchBar = ({ text, change }) => {
   }, []);
 
   const setDynamicPlaceholder = () => {
+    let dotdotdot = false;
+    let tempPlaceholder = "";
+
     timeInterval = setInterval(() => {
-      setPlaceholder((prev) => {
-        let newLength = (prev.length + 1) % (fullPlaceholder.length + 1);
-        return fullPlaceholder.substring(0, newLength);
-      });
-    }, 500);
+      if (!dotdotdot) {
+        setPlaceholder((prev) => {
+          let newLength = (prev.length + 1) % (fullPlaceholder.length + 1);
+          if (newLength === fullPlaceholder.length) {
+            dotdotdot = true;
+            tempPlaceholder = "Search here";
+          }
+          return fullPlaceholder.substring(0, newLength);
+        });
+      } else if (dotdotdot) {
+        tempPlaceholder += ".";
+        setPlaceholder((prev) => tempPlaceholder);
+        if (tempPlaceholder === "Search here...") dotdotdot = false;
+      }
+    }, 400);
   };
 
   const clearTimeIntervalForDynamicPlaceholder = () => {
