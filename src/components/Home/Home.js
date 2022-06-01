@@ -1,13 +1,14 @@
 import React from "react";
 import Clock from "../shared/Clock/Clock";
+import ComponentAtRightBottom from "../shared/ComponentAtRightBottom/ComponentAtRightBottom";
 import FilterableProducts from "./FilterableProducts/FilterableProducts";
 
 const Home = (props) => {
   return (
     <>
-      <div style={{ position: "fixed", right: "2px", bottom: "5px" }}>
+      <ComponentAtRightBottom>
         <Clock />
-      </div>
+      </ComponentAtRightBottom>
       <div className="row">
         <div className="col">
           <FilterableProducts />
