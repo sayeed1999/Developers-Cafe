@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AppRoutes from "../../constants/AppRoutes";
+import { AuthContext } from "../../contexts/AuthContext";
 import "./NavBar.css";
 
 const NavBar = (props) => {
+  const { isUserAuthenticated, logout } = useContext(AuthContext);
+
   return (
     <>
       <nav className="navbar bg-success d-flex justify-content-start">
@@ -27,16 +30,32 @@ const NavBar = (props) => {
             Quiz!
           </Link>
         </span>
-        <span style={{ marginLeft: "auto" }}>
-          <Link exact to={AppRoutes.Signup} style={{ color: "#fff" }}>
-            Signup
-          </Link>
-        </span>
-        <span>
-          <Link exact to={AppRoutes.Login} style={{ color: "#fff" }}>
-            Login
-          </Link>
-        </span>
+        <span className="flex-grow-1"></span>
+        {!isUserAuthenticated && (
+          <span>
+            <Link exact to={AppRoutes.Signup} style={{ color: "#fff" }}>
+              Signup
+            </Link>
+          </span>
+        )}
+        {!isUserAuthenticated && (
+          <span>
+            <Link exact to={AppRoutes.Login} style={{ color: "#fff" }}>
+              Login
+            </Link>
+          </span>
+        )}
+        {isUserAuthenticated && (
+          <span
+            style={{
+              color: "#fff",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+          >
+            <a onClick={() => logout()}>Logout</a>
+          </span>
+        )}
       </nav>
       <div className="spacerBelowNavbar"></div>
     </>
