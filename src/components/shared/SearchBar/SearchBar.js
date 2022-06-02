@@ -42,9 +42,9 @@ const SearchBar = ({ text, change }) => {
 
     timeInterval = setInterval(() => {
       index %= length;
-      setPlaceholder(placeholders[index]);
+      setPlaceholder((placeholder) => placeholders[index]);
       index++;
-    }, 800);
+    }, 200);
   };
 
   const clearTimeIntervalForDynamicPlaceholder = () => {
