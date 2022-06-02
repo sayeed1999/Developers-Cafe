@@ -25,11 +25,6 @@ const NavBar = (props) => {
             Order Food!
           </Link>
         </span>
-        <span>
-          <Link exact to={AppRoutes.Quiz} style={{ color: "#fff" }}>
-            Quiz!
-          </Link>
-        </span>
         <span className="flex-grow-1"></span>
         {!isUserAuthenticated && (
           <span>
