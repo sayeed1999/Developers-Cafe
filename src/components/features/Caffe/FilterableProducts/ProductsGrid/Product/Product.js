@@ -9,7 +9,7 @@ const Product = (props) => {
       <img
         src={product.img}
         className="img-thumbnail"
-        style={{ height: "250px", width: "310px" }}
+        style={{ height: "250px", width: "100%" }}
       />
       <p className="productName">{product.name}</p>
       <div className="d-flex justify-content-between">

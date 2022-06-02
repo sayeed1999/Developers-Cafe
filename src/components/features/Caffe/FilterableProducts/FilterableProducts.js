@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SearchBar from "../../shared/SearchBar/SearchBar";
+import SearchBar from "../../../shared/SearchBar/SearchBar";
 import ProductsGrid from "./ProductsGrid/ProductsGrid";
 
 const FilterableProducts = (props) => {

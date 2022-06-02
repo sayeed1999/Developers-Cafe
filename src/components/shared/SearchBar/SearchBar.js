@@ -2,11 +2,31 @@ import React, { useEffect, useState } from "react";
 import "./SearchBar.css";
 
 const SearchBar = ({ text, change }) => {
-  const [placeholder, setPlaceholder] = useState("S");
-  const fullPlaceholder = "Search here...";
+  const [placeholder, setPlaceholder] = useState("");
+  const placeholders = [
+    "",
+    "S",
+    "Se",
+    "Sea",
+    "Sear",
+    "Searc",
+    "Search",
+    "Search h",
+    "Search he",
+    "Search her",
+    "Search here",
+    "Search here.",
+    "Search here..",
+    "Search here...",
+    "Search here",
+    "Search here.",
+    "Search here..",
+    "Search here...",
+  ];
   let timeInterval;
 
   useEffect(() => {
+    console.log("rendering..");
     // After component mounts
     setDynamicPlaceholder();
 
@@ -17,25 +37,14 @@ const SearchBar = ({ text, change }) => {
   }, []);
 
   const setDynamicPlaceholder = () => {
-    let dotdotdot = false;
-    let tempPlaceholder = "";
+    let index = 0;
+    let length = placeholders.length;
 
     timeInterval = setInterval(() => {
-      if (!dotdotdot) {
-        setPlaceholder((prev) => {
-          let newLength = (prev.length + 1) % (fullPlaceholder.length + 1);
-          if (newLength === fullPlaceholder.length) {
-            dotdotdot = true;
-            tempPlaceholder = "Search here";
-          }
-          return fullPlaceholder.substring(0, newLength);
-        });
-      } else if (dotdotdot) {
-        tempPlaceholder += ".";
-        setPlaceholder((prev) => tempPlaceholder);
-        if (tempPlaceholder === "Search here...") dotdotdot = false;
-      }
-    }, 400);
+      index %= length;
+      setPlaceholder(placeholders[index]);
+      index++;
+    }, 800);
   };
 
   const clearTimeIntervalForDynamicPlaceholder = () => {

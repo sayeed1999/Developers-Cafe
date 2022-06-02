@@ -5,26 +5,31 @@ import "./NavBar.css";
 const NavBar = (props) => {
   return (
     <>
-      <nav className="navbar bg-light d-flex justify-content-start">
+      <nav className="navbar bg-success d-flex justify-content-start">
         <span className="app-title">
-          <Link exact to="/">
+          <Link exact to="/" style={{ textDecoration: "none", color: "#fff" }}>
             Problem Solver's Caffe!
           </Link>
         </span>
-        <span style={{ color: "royalblue" }}>
-          <Link exact to="/chit-chat">
+        <span>
+          <Link exact to="/chit-chat" style={{ color: "#fff" }}>
             Chit-Chat!
           </Link>
         </span>
-        <span style={{ color: "green" }}>
-          <Link exact to="/caffe">
+        <span>
+          <Link exact to="/caffe" style={{ color: "#fff" }}>
             Order Food!
           </Link>
         </span>
+        <span>
+          <Link exact to="/quiz" style={{ color: "#fff" }}>
+            Quiz!
+          </Link>
+        </span>
         <span
-          style={{ marginLeft: "auto", fontStyle: "italic", color: "magenta" }}
+          style={{ marginLeft: "auto", fontStyle: "italic", color: "#fff" }}
         >
-          <span style={{ fontWeight: "bold" }}>Welcome</span>, guest!
+          Welcome, guest!
         </span>
       </nav>
       <div className="spacerBelowNavbar"></div>
