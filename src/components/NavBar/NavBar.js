@@ -26,11 +26,9 @@ const NavBar = (props) => {
             Quiz!
           </Link>
         </span>
-        <span
-          style={{ marginLeft: "auto", fontStyle: "italic", color: "#fff" }}
-        >
-          Welcome, guest!
-        </span>
+        <span style={{ marginLeft: "auto", color: "#fff" }}>Signup</span>{" "}
+        {" | "}
+        <span style={{ color: "#fff" }}>Login</span>
       </nav>
       <div className="spacerBelowNavbar"></div>
     </>

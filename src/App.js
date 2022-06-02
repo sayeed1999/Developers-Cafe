@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Caffe from "./components/features/Caffe/Caffe";
-import ChitChat from "./components/features/ChitChat/ChitChat";
-import QuizDashBoard from "./components/features/QuizDashBoard/QuizDashBoard";
 import Layout from "./components/Layout/Layout";
+import Caffe from "./components/modules/Caffe/Caffe";
+import ChitChat from "./components/modules/ChitChat/ChitChat";
+import QuizDashBoard from "./components/modules/QuizDashBoard/QuizDashBoard";
 import NavBar from "./components/NavBar/NavBar";
 import AppRoutes from "./constants/AppRoutes";
 
