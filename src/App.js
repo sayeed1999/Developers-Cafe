@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import ContextProviders from "./components/ContextProviders/ContextProviders";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/modules/Auth/Login/Login";
 import Signup from "./components/modules/Auth/Signup/Signup";
@@ -8,12 +9,11 @@ import ChitChat from "./components/modules/ChitChat/ChitChat";
 import QuizDashBoard from "./components/modules/QuizDashBoard/QuizDashBoard";
 import NavBar from "./components/NavBar/NavBar";
 import AppRoutes from "./constants/AppRoutes";
-import AuthContextProvider from "./contexts/AuthContext";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <AuthContextProvider>
+      <ContextProviders>
         <NavBar />
         <Layout>
           <Routes>
@@ -25,7 +25,7 @@ const App = () => {
             <Route exact path={AppRoutes.Login} element={<Login />} />
           </Routes>
         </Layout>
-      </AuthContextProvider>
+      </ContextProviders>
     </BrowserRouter>
   );
 };

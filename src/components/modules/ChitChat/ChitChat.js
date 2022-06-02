@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { PostContext } from "../../../contexts/PostContext";
 import Post from "./Post/Post";
 
 const ChitChat = () => {
-  const [posts, setPosts] = useState(POSTS);
+  const { posts } = useContext(PostContext);
+  const [postsToDisplay, setPostsToDisplay] = useState([]);
+
+  useEffect(() => {
+    setPostsToDisplay((prev) => posts);
+  });
 
   return (
     <div className="row">
-      {posts.map((post) => (
+      {postsToDisplay.map((post) => (
         <div className="col-md-12" key={post.id}>
           <Post post={post} />
         </div>
@@ -16,26 +22,3 @@ const ChitChat = () => {
 };
 
 export default ChitChat;
-
-const POSTS = [
-  {
-    id: 1,
-    body: "yesterday, i was programming, and learnt something new! yay!",
-    user: "human",
-  },
-  {
-    id: 2,
-    body: "yesterday, i was programming, and learnt something new! yay!",
-    user: "human",
-  },
-  {
-    id: 3,
-    body: "yesterday, i was programming, and learnt something new! yay!",
-    user: "human",
-  },
-  {
-    id: 4,
-    body: "yesterday, i was programming, and learnt something new! yay!",
-    user: "human",
-  },
-];

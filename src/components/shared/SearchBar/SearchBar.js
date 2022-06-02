@@ -3,53 +3,20 @@ import "./SearchBar.css";
 
 const SearchBar = ({ text, change }) => {
   const [placeholder, setPlaceholder] = useState("");
-  const placeholders = [
-    "",
-    "S",
-    "Se",
-    "Sea",
-    "Sear",
-    "Searc",
-    "Search",
-    "Search h",
-    "Search he",
-    "Search her",
-    "Search here",
-    "Search here.",
-    "Search here..",
-    "Search here...",
-    "Search here",
-    "Search here.",
-    "Search here..",
-    "Search here...",
-  ];
-  let timeInterval;
 
   useEffect(() => {
-    console.log("rendering..");
     // After component mounts
-    setDynamicPlaceholder();
-
-    // Before component unmounts
-    return () => {
-      clearTimeIntervalForDynamicPlaceholder();
-    };
-  }, []);
-
-  const setDynamicPlaceholder = () => {
+    let tempPlaceholder = "Search here...";
+    let length = tempPlaceholder.length;
     let index = 0;
-    let length = placeholders.length;
-
-    timeInterval = setInterval(() => {
-      index %= length;
-      setPlaceholder((placeholder) => placeholders[index]);
+    let interval = setInterval(() => {
       index++;
-    }, 200);
-  };
-
-  const clearTimeIntervalForDynamicPlaceholder = () => {
-    clearInterval(timeInterval);
-  };
+      if (index > length) clearInterval(interval);
+      setPlaceholder((prev) => tempPlaceholder.substring(0, index));
+    }, 120);
+    // Before component unmounts
+    return () => {};
+  }, []);
 
   return (
     <input

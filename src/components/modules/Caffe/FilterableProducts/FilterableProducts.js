@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { ProductContext } from "../../../../contexts/ProductContext";
 import SearchBar from "../../../shared/SearchBar/SearchBar";
 import ProductsGrid from "./ProductsGrid/ProductsGrid";
 
 const FilterableProducts = (props) => {
+  const { products } = useContext(ProductContext);
   const [searchText, setSearchText] = useState("");
-  const [products, setProducts] = useState(PRODUCTS);
+  const [productsToDisplay, setProductsToDisplay] = useState([]);
+
+  useEffect(() => {
+    setProductsToDisplay((prev) => products);
+  }, []); // [] indicates that this will run only on component mount
 
   const onSearchTextChange = (text) => {
     setSearchText(text);
-    setProducts(filteredProducts(text));
+    setProductsToDisplay(filteredProducts(text));
   };
 
   const filteredProducts = (text) => {
-    return PRODUCTS.filter((x) =>
+    return products.filter((x) =>
       x.name.toLowerCase().includes(text.toLowerCase())
     );
   };
@@ -20,52 +26,9 @@ const FilterableProducts = (props) => {
   return (
     <div>
       <SearchBar text={searchText} change={onSearchTextChange} />
-      <ProductsGrid products={products} />
+      <ProductsGrid products={productsToDisplay} />
     </div>
   );
 };
 
 export default FilterableProducts;
-
-const PRODUCTS = [
-  {
-    id: 1,
-    category: "Coffee",
-    price: "$9.99",
-    stocked: true,
-    name: "Espresso",
-    img: "https://th.bing.com/th/id/OIP.81zV2zMum-swUEnOz5o2qgHaFP?pid=ImgDet&w=1200&h=850&rs=1",
-  },
-  {
-    id: 2,
-    category: "Coffee",
-    price: "$8.99",
-    stocked: true,
-    name: "Latte",
-    img: "https://th.bing.com/th/id/OIP.qt87YWIcF7DvpuDQEyTlrAHaGM?pid=ImgDet&rs=1",
-  },
-  {
-    id: 3,
-    category: "Coffee",
-    price: "$9.99",
-    stocked: true,
-    name: "Espresso",
-    img: "https://th.bing.com/th/id/OIP.81zV2zMum-swUEnOz5o2qgHaFP?pid=ImgDet&w=1200&h=850&rs=1",
-  },
-  {
-    id: 4,
-    category: "Coffee",
-    price: "$8.99",
-    stocked: true,
-    name: "Latte",
-    img: "https://th.bing.com/th/id/OIP.qt87YWIcF7DvpuDQEyTlrAHaGM?pid=ImgDet&rs=1",
-  },
-  {
-    id: 5,
-    category: "Coffee",
-    price: "$8.99",
-    stocked: true,
-    name: "Latte",
-    img: "https://th.bing.com/th/id/OIP.qt87YWIcF7DvpuDQEyTlrAHaGM?pid=ImgDet&rs=1",
-  },
-];
