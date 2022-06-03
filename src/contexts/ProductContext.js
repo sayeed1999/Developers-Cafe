@@ -5,8 +5,19 @@ export const ProductContext = createContext();
 const ProductContextProvider = ({ children }) => {
   const products = PRODUCTS;
 
+  const getProductById = (id) => {
+    return products.find((x) => x.id === id);
+  };
+
+  const giveProductReview = () => {
+    // TODO:- do something...
+    console.log("product review given...");
+  };
+
   return (
-    <ProductContext.Provider value={{ products: PRODUCTS }}>
+    <ProductContext.Provider
+      value={{ products, getProductById, giveProductReview }}
+    >
       {children}
     </ProductContext.Provider>
   );

@@ -1,4 +1,4 @@
-const TextInput = ({ type, name }) => {
+const TextInput = ({ type, name, required = true }) => {
   return (
     <div className="form-group">
       <label className="form-text">{name}</label>
@@ -7,7 +7,9 @@ const TextInput = ({ type, name }) => {
         className="form-control"
         placeholder={`Enter ${name}`}
       />
-      <small className="form-text text-muted">*Field is required</small>
+      {required && (
+        <small className="form-text text-muted">*Field is required</small>
+      )}
     </div>
   );
 };
