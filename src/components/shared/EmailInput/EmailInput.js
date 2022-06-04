@@ -1,9 +1,9 @@
-const TextInput = ({ name, required = true, value, onChange }) => {
+const EmailInput = ({ name, required = true, value, onChange }) => {
   return (
     <div className="form-group">
       <label className="form-text">{name}</label>
       <input
-        type="text"
+        type="email"
         className="form-control"
         placeholder={`Enter ${name}`}
         required={required}
@@ -17,4 +17,4 @@ const TextInput = ({ name, required = true, value, onChange }) => {
   );
 };
 
-export default TextInput;
+export default EmailInput;

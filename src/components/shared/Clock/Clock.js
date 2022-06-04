@@ -34,7 +34,7 @@ const Clock = () => {
 
   return (
     <div className="clock">
-      <Button text={lang} change={() => handleClick()}>
+      <Button text={lang} onClick={handleClick}>
         {lang}
       </Button>
       <h3> {date.toLocaleTimeString(locale)} </h3>

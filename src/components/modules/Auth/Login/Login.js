@@ -1,23 +1,48 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AppRoutes from "../../../../constants/AppRoutes";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import Button from "../../../shared/Button/Button";
 import ButtonGroup from "../../../shared/ButtonGroup/ButtonGroup";
+import EmailInput from "../../../shared/EmailInput/EmailInput";
 import Form from "../../../shared/Form/Form";
-import TextInput from "../../../shared/TextInput/TextInput";
+import PasswordInput from "../../../shared/PasswordInput/PasswordInput";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const submit = async () => {
+    if (!email || !password) {
+      return alert("Required fields empty");
+    }
+
+    await login(email, password)
+      .then(() => {
+        // returns UserCredentialImpl;
+        alert("Success!");
+        navigate(AppRoutes.Home);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
   return (
     <>
       <h2 style={{ fontWeight: "400" }}> Login to your account.. </h2>
       <Form className="login">
-        <TextInput type="email" name="Email"></TextInput>
-        <TextInput type="password" name="Password"></TextInput>
+        <EmailInput name="Email" value={email} onChange={setEmail} />
+        <PasswordInput
+          name="Password"
+          value={password}
+          onChange={setPassword}
+        />
         <ButtonGroup>
-          <Button change={login}>Submit</Button>
+          <Button onClick={submit}>Submit</Button>
         </ButtonGroup>
         <p className="form-text text-center">
           Don't have an account? <Link to={AppRoutes.Signup}>Signup</Link>{" "}

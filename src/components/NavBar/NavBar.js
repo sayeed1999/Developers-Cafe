@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import "./NavBar.css";
 
 const NavBar = (props) => {
-  const { isUserAuthenticated, logout } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
 
   return (
     <>
@@ -26,21 +26,21 @@ const NavBar = (props) => {
           </Link>
         </span>
         <span className="flex-grow-1"></span>
-        {!isUserAuthenticated && (
+        {!currentUser && (
           <span>
             <Link exact to={AppRoutes.Signup} style={{ color: "#fff" }}>
               Signup
             </Link>
           </span>
         )}
-        {!isUserAuthenticated && (
+        {!currentUser && (
           <span>
             <Link exact to={AppRoutes.Login} style={{ color: "#fff" }}>
               Login
             </Link>
           </span>
         )}
-        {isUserAuthenticated && (
+        {!!currentUser && (
           <span
             style={{
               color: "#fff",

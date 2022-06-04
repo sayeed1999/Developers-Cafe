@@ -1,23 +1,70 @@
-import { createContext, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AppRoutes from "../constants/AppRoutes";
+import "../firebase";
 
 export const AuthContext = createContext();
 
-const AuthContextProvider = (props) => {
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+const AuthContextProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState();
+  const navigate = useNavigate();
 
-  const login = () => {
-    setIsUserAuthenticated(true);
+  useEffect(() => {
+    const auth = getAuth();
+    return onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user); // returns unsubscribe method to fix memory leak!
+    });
+  }, []);
+
+  const signup = async (email, password, username) => {
+    const auth = getAuth();
+    //signup
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(async () => {
+        // update username
+        await updateProfile(auth.currentUser, {
+          displayName: username,
+        }).then(() => {
+          alert("Success!");
+          navigate(AppRoutes.Home);
+        });
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+
+    const user = auth.currentUser;
+    setCurrentUser({
+      ...user,
+    });
+  };
+
+  const login = (email, password) => {
+    const auth = getAuth();
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = () => {
-    setIsUserAuthenticated(false);
+    const auth = getAuth();
+    return signOut(auth);
   };
 
-  return (
-    <AuthContext.Provider value={{ isUserAuthenticated, login, logout }}>
-      {props.children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    currentUser,
+    signup,
+    login,
+    logout,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContextProvider;
