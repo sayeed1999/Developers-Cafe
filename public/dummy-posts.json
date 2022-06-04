@@ -1,0 +1,74 @@
+{
+  "posts": {
+    "1": {
+      "body": "Hey, i am learning React js..",
+      "createdAt": "2022-06-04",
+      "userId": "CMpRtdw8NDTNR3BhwRjkg4sO2Za2",
+      "likes": 2,
+      "comments": {
+        "20": {
+          "userId": "BbIJe6JovPbqUdIp9eb3OQUhMf13",
+          "body": "Keep up the good work :)",
+          "createdAt": "2022-06-05"
+        },
+        "21": {
+          "userId": "BbIJe6JovPbqUdIp9eb3OQUhMf13",
+          "body": "Keep up the good work everyday! :)",
+          "createdAt": "2022-06-05"
+        }
+      }
+    },
+    "2": {
+      "body": "Hey, i am making my own website!",
+      "createdAt": "2022-06-04",
+      "userId": "W4iJRo4IGtf5fsOnWasIzFsixHs2",
+      "comments": {
+        "20": {
+          "userId": "BbIJe6JovPbqUdIp9eb3OQUhMf13",
+          "body": "Keep up the good work :)",
+          "createdAt": "2022-06-05"
+        },
+        "21": {
+          "userId": "BbIJe6JovPbqUdIp9eb3OQUhMf13",
+          "body": "Keep up the good work everyday! :)",
+          "createdAt": "2022-06-05"
+        }
+      }
+    },
+    "3": {
+      "body": "Hey, i am learning React js..",
+      "createdAt": "2022-06-04",
+      "userId": "CMpRtdw8NDTNR3BhwRjkg4sO2Za2",
+      "likes": 5,
+      "comments": {
+        "20": {
+          "userId": "BbIJe6JovPbqUdIp9eb3OQUhMf13",
+          "body": "Keep up the good work :)",
+          "createdAt": "2022-06-05"
+        },
+        "21": {
+          "userId": "BbIJe6JovPbqUdIp9eb3OQUhMf13",
+          "body": "Keep up the good work everyday! :)",
+          "createdAt": "2022-06-05"
+        }
+      }
+    },
+    "4": {
+      "body": "Hey, i am making my own website!",
+      "createdAt": "2022-06-04",
+      "userId": "W4iJRo4IGtf5fsOnWasIzFsixHs2",
+      "comments": {
+        "20": {
+          "userId": "BbIJe6JovPbqUdIp9eb3OQUhMf13",
+          "body": "Keep up the good work :)",
+          "createdAt": "2022-06-05"
+        },
+        "21": {
+          "userId": "BbIJe6JovPbqUdIp9eb3OQUhMf13",
+          "body": "Keep up the good work everyday! :)",
+          "createdAt": "2022-06-05"
+        }
+      }
+    }
+  }
+}

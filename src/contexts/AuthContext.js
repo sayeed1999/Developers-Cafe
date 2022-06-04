@@ -20,6 +20,7 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const auth = getAuth();
     return onAuthStateChanged(auth, (user) => {
+      // console.log(user);
       setCurrentUser(user); // returns unsubscribe method to fix memory leak!
     });
   }, []);

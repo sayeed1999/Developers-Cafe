@@ -3,12 +3,18 @@ import { PostContext } from "../../../contexts/PostContext";
 import Post from "./Post/Post";
 
 const ChitChat = () => {
-  const { posts } = useContext(PostContext);
+  const { fetchPosts } = useContext(PostContext);
   const [postsToDisplay, setPostsToDisplay] = useState([]);
 
   useEffect(() => {
-    setPostsToDisplay((prev) => posts);
-  });
+    fetchPosts()
+      .then((val) => {
+        setPostsToDisplay(val);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  }, []);
 
   return (
     <div className="row">
