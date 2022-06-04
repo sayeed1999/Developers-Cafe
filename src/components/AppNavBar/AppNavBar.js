@@ -60,11 +60,11 @@ const AppNavBar = ({ toggleDrawer }) => {
             )}
             {!!currentUser && (
               <Typography
-                variant="h6"
+                variant="overline"
                 style={{
                   textDecoration: "underline",
-                  fontWeight: "100",
                   marginRight: "5px",
+                  fontSize: "12px",
                 }}
               >
                 Welcome, {currentUser.displayName}!

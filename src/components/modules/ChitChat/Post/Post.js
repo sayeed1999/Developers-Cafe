@@ -8,12 +8,27 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PostContext } from "../../../../contexts/PostContext";
 import Comment from "./Comment/Comment";
-import "./Post.css";
 
-const Post = ({ post }) => {
+const Post = ({ post, postId }) => {
   const [hideComments, setHideComments] = useState(true);
+  const [state, setState] = useState(post);
+  const { fetchPostById, tapHeart } = useContext(PostContext);
+
+  const onTapHeart = () => {
+    tapHeart(postId, state)
+      .then(() => {
+        // now fetch the updated version of post
+        fetchPostById(postId).then((updatedPost) => {
+          setState(updatedPost);
+        });
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
   return (
     <Card
@@ -29,14 +44,18 @@ const Post = ({ post }) => {
             Md. Sayeed Rahman
           </Typography>
           <Typography variant="subtitle2" color="text.secondary">
-            {post.createdAt}
+            {state.createdAt}
           </Typography>
         </div>
-        <Typography variant="body1">{post.body}</Typography>
+        <Typography variant="body1">{state.body}</Typography>
         <Typography variant="subtitle2">
-          {post.likes ?? 0}{" "}
+          {state.likes ?? 0}{" "}
           <Tooltip title="Tap to increase Heart">
-            <IconButton>
+            <IconButton
+              onClick={() => {
+                onTapHeart();
+              }}
+            >
               <FavoriteIcon style={{ color: "darkred" }} />
             </IconButton>
           </Tooltip>
@@ -52,8 +71,9 @@ const Post = ({ post }) => {
           <div className="row">
             <div className="col-1"></div>
             <div className="col-11">
-              {Object.values(post.comments).map((comment) => (
-                <Comment comment={comment} />
+              {/* Object.entries() returns [key, value] */}
+              {Object.entries(state.comments).map((entry) => (
+                <Comment comment={entry[1]} key={entry[0]} />
               ))}
             </div>
           </div>

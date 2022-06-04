@@ -1,13 +1,17 @@
-import { get, getDatabase, orderByKey, query, ref } from "firebase/database";
+import {
+  get,
+  getDatabase,
+  orderByKey,
+  query,
+  ref,
+  set,
+} from "firebase/database";
 import { createContext } from "react";
 
 export const PostContext = createContext();
 
 const PostContextProvider = (props) => {
-  let posts = [];
-
   const fetchPosts = async () => {
-    // posts = [];
     const db = getDatabase();
     const postsRef = ref(db, "posts");
     const postsQuery = query(postsRef, orderByKey());
@@ -15,8 +19,7 @@ const PostContextProvider = (props) => {
     try {
       const snapshot = await get(postsQuery);
       if (snapshot.exists()) {
-        posts = [...Object.values(snapshot.val())];
-        return posts;
+        return snapshot.val();
       } else {
         throw Error("no data found on database query..");
       }
@@ -25,8 +28,38 @@ const PostContextProvider = (props) => {
     }
   };
 
+  const fetchPostById = async (postId) => {
+    const db = getDatabase();
+    const postRef = ref(db, "posts/" + postId);
+    const postQuery = query(postRef);
+
+    try {
+      const snapshot = await get(postQuery);
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        throw Error("no data found on database query..");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const tapHeart = (postId, post) => {
+    const db = getDatabase();
+    const postRef = ref(db, "posts/" + postId);
+    if (!post.likes) post.likes = 0;
+    const tempEntity = {
+      ...post,
+      likes: post.likes + 1,
+    };
+    return set(postRef, tempEntity);
+  };
+
   const value = {
     fetchPosts,
+    fetchPostById,
+    tapHeart,
   };
 
   return (
