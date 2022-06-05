@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import AppMsgs from "../../constants/AppMsgs";
 import AppRoutes from "../../constants/AppRoutes";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -17,7 +18,7 @@ const AppNavBar = ({ toggleDrawer }) => {
     await logout()
       .then(() => {
         navigate(AppRoutes.Home);
-        alert("Success!");
+        alert(AppMsgs.LoggedOut);
       })
       .catch((err) => {
         alert(err.message);

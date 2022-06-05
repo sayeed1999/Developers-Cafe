@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import AppMsgs from "../constants/AppMsgs";
 
 export const ProductContext = createContext();
 
@@ -11,7 +12,7 @@ const ProductContextProvider = ({ children }) => {
 
   const giveProductReview = () => {
     // TODO:- do something...
-    console.log("product review given...");
+    console.log(AppMsgs.ReviewPlaced);
   };
 
   return (

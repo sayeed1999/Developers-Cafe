@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AppMsgs from "../constants/AppMsgs";
 import AppRoutes from "../constants/AppRoutes";
 import "../firebase";
 
@@ -19,9 +20,9 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const auth = getAuth();
+    // returns unsubscribe method to fix memory leak!
     return onAuthStateChanged(auth, (user) => {
-      // console.log(user);
-      setCurrentUser(user); // returns unsubscribe method to fix memory leak!
+      setCurrentUser(user);
     });
   }, []);
 
@@ -34,7 +35,7 @@ const AuthContextProvider = ({ children }) => {
         await updateProfile(auth.currentUser, {
           displayName: username,
         }).then(() => {
-          alert("Success!");
+          alert(AppMsgs.SignedUp);
           navigate(AppRoutes.Home);
         });
       })

@@ -7,6 +7,7 @@ import {
   set,
 } from "firebase/database";
 import { createContext } from "react";
+import AppMsgs from "../constants/AppMsgs";
 
 export const PostContext = createContext();
 
@@ -21,7 +22,7 @@ const PostContextProvider = (props) => {
       if (snapshot.exists()) {
         return snapshot.val();
       } else {
-        throw Error("no data found on database query..");
+        throw Error(AppMsgs.NoDataFound);
       }
     } catch (err) {
       console.log(err);
@@ -38,7 +39,7 @@ const PostContextProvider = (props) => {
       if (snapshot.exists()) {
         return snapshot.val();
       } else {
-        throw Error("no data found on database query..");
+        throw Error(AppMsgs.NoDataFound);
       }
     } catch (err) {
       console.log(err);

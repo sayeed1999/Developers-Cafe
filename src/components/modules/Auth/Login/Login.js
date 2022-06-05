@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AppMsgs from "../../../../constants/AppMsgs";
 import AppRoutes from "../../../../constants/AppRoutes";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import Button from "../../../shared/Button/Button";
@@ -23,7 +24,7 @@ const Login = () => {
     await login(email, password)
       .then(() => {
         // returns UserCredentialImpl;
-        alert("Success!");
+        alert(AppMsgs.LoggedIn);
         navigate(AppRoutes.Home);
       })
       .catch((err) => {
