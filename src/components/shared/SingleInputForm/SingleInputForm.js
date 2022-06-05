@@ -1,33 +1,37 @@
-import { useState } from "react";
-
 const SingleInputForm = ({
+  state,
+  setState,
   type,
   onSubmit,
   buttonName = "Press",
-  placeholder,
-  label,
+  placeholder = "Type here..",
 }) => {
-  const [state, setState] = useState();
-
   return (
-    <div className="row">
-      <div className="col-md-9">
+    <div className="d-flex align-items-end">
+      {type === "textarea" ? (
+        <textarea
+          placeholder={placeholder}
+          value={state}
+          onChange={() => setState(event.target.value)}
+          className="flex-grow-1 p-1"
+        ></textarea>
+      ) : (
         <input
           type={type}
           placeholder={placeholder}
           value={state}
           onChange={() => setState(event.target.value)}
+          className="flex-grow-1 p-1"
         />
-      </div>
-      <div className="col-md-3">
-        <button
-          type="button"
-          className="btn btn-primary btn-sm"
-          onClick={() => onSubmit(state)}
-        >
-          {buttonName}
-        </button>
-      </div>
+      )}
+      <div className="px-1"></div>
+      <button
+        type="button"
+        className="btn btn-primary btn-sm"
+        onClick={() => onSubmit()}
+      >
+        {buttonName}
+      </button>
     </div>
   );
 };

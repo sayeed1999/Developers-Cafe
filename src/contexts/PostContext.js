@@ -1,3 +1,5 @@
+import { getDisplayName } from "@mui/utils";
+import axios from "axios";
 import {
   get,
   getDatabase,
@@ -6,20 +8,23 @@ import {
   ref,
   set,
 } from "firebase/database";
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import AppMsgs from "../constants/AppMsgs";
+import { AuthContext } from "./AuthContext";
 
 export const PostContext = createContext();
 
 const PostContextProvider = (props) => {
+  const { currentUser } = useContext(AuthContext);
+
   const fetchPosts = async () => {
     const db = getDatabase();
     const postsRef = ref(db, "posts");
     const postsQuery = query(postsRef, orderByKey());
-
     try {
       const snapshot = await get(postsQuery);
       if (snapshot.exists()) {
+        console.log("all posts fetched...");
         return snapshot.val();
       } else {
         throw Error(AppMsgs.NoDataFound);
@@ -33,7 +38,6 @@ const PostContextProvider = (props) => {
     const db = getDatabase();
     const postRef = ref(db, "posts/" + postId);
     const postQuery = query(postRef);
-
     try {
       const snapshot = await get(postQuery);
       if (snapshot.exists()) {
@@ -44,6 +48,20 @@ const PostContextProvider = (props) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const createPost = (postBody) => {
+    const newPost = {
+      body: postBody,
+      createdAt: new Date().toDateString(),
+      userid: currentUser.uid,
+      username: getDisplayName,
+      comments: {},
+    };
+    return axios.post(
+      `${process.env.REACT_APP_DATABASE_URL}/posts.json`,
+      newPost
+    );
   };
 
   const tapHeart = (postId, post) => {
@@ -60,6 +78,7 @@ const PostContextProvider = (props) => {
   const value = {
     fetchPosts,
     fetchPostById,
+    createPost,
     tapHeart,
   };
 

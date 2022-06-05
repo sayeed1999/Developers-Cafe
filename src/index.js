@@ -18,10 +18,6 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (res) => {
     // Add configurations here..
-    if (res.status === 201) {
-      console.log("Posted successfully");
-    }
-    console.log(res);
     return res;
   },
   (err) => {
