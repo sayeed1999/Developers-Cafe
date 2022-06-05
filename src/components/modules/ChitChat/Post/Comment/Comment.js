@@ -7,7 +7,7 @@ const Comment = (props) => {
     <Card style={{ margin: "5px 0" }}>
       <CardContent>
         <div className="d-flex justify-content-between align-items-center">
-          <Typography variant="overline">Raju Ahmed</Typography>
+          <Typography variant="overline">{comment.username}</Typography>
           <Typography variant="subtitle2" color="text.secondary">
             {comment.createdAt}
           </Typography>

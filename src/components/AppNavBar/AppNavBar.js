@@ -14,8 +14,8 @@ const AppNavBar = ({ toggleDrawer }) => {
   const { currentUser, logout } = React.useContext(AuthContext);
   const navigate = useNavigate();
 
-  const onLogoutPress = async () => {
-    await logout()
+  const onLogoutPress = () => {
+    logout()
       .then(() => {
         navigate(AppRoutes.Home);
         alert(AppMsgs.LoggedOut);

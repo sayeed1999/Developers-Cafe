@@ -16,12 +16,12 @@ const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const submit = async () => {
+  const submit = () => {
     if (!email || !password) {
       return alert("Required fields empty");
     }
 
-    await login(email, password)
+    login(email, password)
       .then(() => {
         // returns UserCredentialImpl;
         alert(AppMsgs.LoggedIn);

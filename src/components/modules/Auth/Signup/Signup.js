@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AppRoutes from "../../../../constants/AppRoutes";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import Button from "../../../shared/Button/Button";
@@ -18,9 +18,8 @@ const Signup = () => {
   const [agree, setAgree] = useState(false);
 
   const { signup } = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  const submit = async () => {
+  const submit = () => {
     if (!username || !email || !password || !confirmPassword || !agree) {
       alert("Required fields empty");
       return;
@@ -32,7 +31,7 @@ const Signup = () => {
     }
 
     try {
-      await signup(email, password, username);
+      signup(email, password, username);
     } catch (err) {
       alert(err.message);
     }

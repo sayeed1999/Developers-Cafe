@@ -41,7 +41,7 @@ const Post = ({ post, postId }) => {
       <CardContent>
         <div className="d-flex justify-content-between align-items-center">
           <Typography variant="overline" color="text.secondary" gutterBottom>
-            Md. Sayeed Rahman
+            {state.username}
           </Typography>
           <Typography variant="subtitle2" color="text.secondary">
             {state.createdAt}

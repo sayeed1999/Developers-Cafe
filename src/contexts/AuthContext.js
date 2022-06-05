@@ -26,17 +26,17 @@ const AuthContextProvider = ({ children }) => {
     });
   }, []);
 
-  const signup = async (email, password, username) => {
+  const signup = (email, password, username) => {
     const auth = getAuth();
     //signup
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then(async () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
         // update username
-        await updateProfile(auth.currentUser, {
+        updateProfile(auth.currentUser, {
           displayName: username,
         }).then(() => {
-          alert(AppMsgs.SignedUp);
           navigate(AppRoutes.Home);
+          alert(AppMsgs.SignedUp);
         });
       })
       .catch((err) => {
