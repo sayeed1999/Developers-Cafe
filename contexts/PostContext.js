@@ -1,4 +1,3 @@
-import { getDisplayName } from "@mui/utils";
 import axios from "axios";
 import {
   get,
@@ -55,7 +54,7 @@ const PostContextProvider = (props) => {
       body: postBody,
       createdAt: new Date().toDateString(),
       userid: currentUser.uid,
-      username: getDisplayName,
+      username: displayName,
       comments: {},
     };
     return axios.post(

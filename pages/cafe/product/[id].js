@@ -7,16 +7,25 @@ import { ProductContext } from "../../../contexts/ProductContext";
 const ProductDetail = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { getProductById, giveProductReview } = useContext(ProductContext);
+  const { fetchProductById, giveProductReview } = useContext(ProductContext);
   const [product, setProduct] = useState();
+  const [yourRating, setYourRating] = useState(null);
 
   useEffect(() => {
-    let productFromDB = getProductById(+id);
-    setProduct((prev) => productFromDB);
+    getProductById();
   }, []);
 
-  const onRatingSubmit = (rating) => {
-    giveProductReview();
+  const getProductById = () => {
+    fetchProductById(id).then((productInDB) => {});
+  };
+
+  const onRatingSubmit = () => {
+    giveProductReview(id, product, yourRating)
+      .then(() => {
+        getProductById();
+        setYourRating(0);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -33,6 +42,8 @@ const ProductDetail = () => {
             <br />
             <h6>Review: 5 star</h6>
             <SingleInputForm
+              state={yourRating}
+              setState={setYourRating}
               placeholder="Your rating in range 1-5"
               onSubmit={onRatingSubmit}
             />

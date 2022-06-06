@@ -4,12 +4,16 @@ import SearchBar from "../../shared/SearchBar";
 import ProductsGrid from "./ProductsGrid";
 
 const FilterableProducts = () => {
-  const { products } = useContext(ProductContext);
+  const { fetchProducts } = useContext(ProductContext);
   const [searchText, setSearchText] = useState("");
   const [productsToDisplay, setProductsToDisplay] = useState([]);
 
   useEffect(() => {
-    setProductsToDisplay((prev) => products);
+    fetchProducts()
+      .then((products) => {
+        setProductsToDisplay(products);
+      })
+      .catch((err) => console.log(err));
   }, []); // [] indicates that this will run only on component mount
 
   const onSearchTextChange = (text) => {

@@ -6,13 +6,14 @@ const ProductsGrid = ({ products }) => {
   return (
     <div className="row">
       {products &&
-        products.map((product) => (
-          <div className="col-md-6" key={Math.random()}>
+        Object.entries(products).map((entry) => (
+          <div className="col-md-6" key={entry[0]}>
             {/* Render props pattern used to display products */}
             <Product
-              product={product}
+              // productId={entry[0]}
+              product={entry[1]}
               render={(child) => (
-                <ProductWrapper productId={product.id}>{child}</ProductWrapper>
+                <ProductWrapper productId={entry[0]}>{child}</ProductWrapper>
               )}
             />
             {/* Higher Order pattern commented in */}

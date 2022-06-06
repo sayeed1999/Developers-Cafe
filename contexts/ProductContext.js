@@ -1,70 +1,74 @@
-import { createContext } from "react";
+import {
+  get,
+  getDatabase,
+  orderByKey,
+  query,
+  ref,
+  set,
+} from "firebase/database";
+import { createContext, useContext } from "react";
 import AppMsgs from "../constants/AppMsgs";
+import { AuthContext } from "./AuthContext";
 
 export const ProductContext = createContext();
 
 const ProductContextProvider = ({ children }) => {
-  const products = PRODUCTS;
+  const { currentUser } = useContext(AuthContext);
 
-  const getProductById = (id) => {
-    return products.find((x) => x.id === id);
+  const fetchProducts = async () => {
+    const db = getDatabase();
+    const prodRef = ref(db, "products");
+    const prodQuery = query(prodRef, orderByKey());
+    try {
+      const snapshot = await get(prodQuery);
+      if (snapshot.exists()) {
+        console.log("all products fetched...");
+        return snapshot.val();
+      } else {
+        throw Error(AppMsgs.NoDataFound);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const giveProductReview = () => {
-    // TODO:- do something...
-    console.log(AppMsgs.ReviewPlaced);
+  const fetchProductById = async (productId) => {
+    const db = getDatabase();
+    const productRef = ref(db, "products/" + productId);
+    const productQuery = query(productRef);
+    try {
+      const snapshot = await get(productQuery);
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        throw Error(AppMsgs.NoDataFound);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const giveProductReview = (productId, product, yourReview) => {
+    const db = getDatabase();
+    const productRef = ref(db, "products/" + productId);
+    // buisness of review here..
+    const tempEntity = {
+      ...product,
+      // review: post.likes + 1,
+    };
+    console.log(yourReview);
+    return set(productRef, tempEntity);
+  };
+
+  const value = {
+    fetchProducts,
+    fetchProductById,
+    giveProductReview,
   };
 
   return (
-    <ProductContext.Provider
-      value={{ products, getProductById, giveProductReview }}
-    >
-      {children}
-    </ProductContext.Provider>
+    <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
   );
 };
 
 export default ProductContextProvider;
-
-const PRODUCTS = [
-  {
-    id: 1,
-    category: "Coffee",
-    price: "$9.99",
-    stocked: true,
-    name: "Espresso",
-    img: "https://th.bing.com/th/id/OIP.81zV2zMum-swUEnOz5o2qgHaFP?pid=ImgDet&w=1200&h=850&rs=1",
-  },
-  {
-    id: 2,
-    category: "Coffee",
-    price: "$8.99",
-    stocked: true,
-    name: "Latte",
-    img: "https://th.bing.com/th/id/OIP.qt87YWIcF7DvpuDQEyTlrAHaGM?pid=ImgDet&rs=1",
-  },
-  {
-    id: 3,
-    category: "Coffee",
-    price: "$9.99",
-    stocked: true,
-    name: "Espresso",
-    img: "https://th.bing.com/th/id/OIP.81zV2zMum-swUEnOz5o2qgHaFP?pid=ImgDet&w=1200&h=850&rs=1",
-  },
-  {
-    id: 4,
-    category: "Coffee",
-    price: "$8.99",
-    stocked: true,
-    name: "Latte",
-    img: "https://th.bing.com/th/id/OIP.qt87YWIcF7DvpuDQEyTlrAHaGM?pid=ImgDet&rs=1",
-  },
-  {
-    id: 5,
-    category: "Coffee",
-    price: "$8.99",
-    stocked: true,
-    name: "Latte",
-    img: "https://th.bing.com/th/id/OIP.qt87YWIcF7DvpuDQEyTlrAHaGM?pid=ImgDet&rs=1",
-  },
-];
