@@ -59,7 +59,7 @@ const PostContextProvider = (props) => {
       comments: {},
     };
     return axios.post(
-      `${process.env.REACT_APP_DATABASE_URL}/posts.json`,
+      `${process.env.NEXT_APP_DATABASE_URL}/posts.json`,
       newPost
     );
   };

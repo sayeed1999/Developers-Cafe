@@ -6,8 +6,8 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import AppMsgs from "../constants/AppMsgs";
 import AppRoutes from "../constants/AppRoutes";
 import "../firebase";
@@ -16,7 +16,7 @@ export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
-  const navigate = useNavigate();
+  const { push } = useRouter();
 
   useEffect(() => {
     const auth = getAuth();
@@ -35,7 +35,7 @@ const AuthContextProvider = ({ children }) => {
         updateProfile(auth.currentUser, {
           displayName: username,
         }).then(() => {
-          navigate(AppRoutes.Home);
+          push(AppRoutes.Home);
           alert(AppMsgs.SignedUp);
         });
       })

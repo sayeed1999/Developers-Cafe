@@ -4,20 +4,20 @@ import { Button, IconButton, Toolbar, Tooltip } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/router";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 import AppMsgs from "../../constants/AppMsgs";
 import AppRoutes from "../../constants/AppRoutes";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const AppNavBar = ({ toggleDrawer }) => {
   const { currentUser, logout } = React.useContext(AuthContext);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const onLogoutPress = () => {
     logout()
       .then(() => {
-        navigate(AppRoutes.Home);
+        router.push(AppRoutes.Home);
         alert(AppMsgs.LoggedOut);
       })
       .catch((err) => {
@@ -44,18 +44,21 @@ const AppNavBar = ({ toggleDrawer }) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Problem Solver's Caffe
+              {"Developer's Cafe"}
             </Typography>
             {!currentUser && (
               <Button
                 color="inherit"
-                onClick={() => navigate(AppRoutes.Signup)}
+                onClick={() => router.push(AppRoutes.Signup)}
               >
                 Signup
               </Button>
             )}
             {!currentUser && (
-              <Button color="inherit" onClick={() => navigate(AppRoutes.Login)}>
+              <Button
+                color="inherit"
+                onClick={() => router.push(AppRoutes.Login)}
+              >
                 Login
               </Button>
             )}

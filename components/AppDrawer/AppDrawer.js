@@ -3,15 +3,15 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import { useRouter } from "next/router";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 import AppRoutes from "../../constants/AppRoutes";
 import AppNavBar from "../AppNavBar/AppNavBar";
 
 const AppDrawer = ({ children }) => {
   const [state, setState] = React.useState(false);
   const anchor = "left";
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const toggleDrawer = (open) => {
     setState(open);
@@ -29,7 +29,7 @@ const AppDrawer = ({ children }) => {
           <ListItemButton>
             <ListItemText
               primary="Home"
-              onClick={() => navigate(AppRoutes.Home)}
+              onClick={() => router.push(AppRoutes.Home)}
             />
           </ListItemButton>
         </ListItem>
@@ -38,7 +38,7 @@ const AppDrawer = ({ children }) => {
           <ListItemButton>
             <ListItemText
               primary="Chit-Chat"
-              onClick={() => navigate(AppRoutes.ChitChat)}
+              onClick={() => router.push(AppRoutes.ChitChat)}
             />
           </ListItemButton>
         </ListItem>
@@ -47,21 +47,10 @@ const AppDrawer = ({ children }) => {
           <ListItemButton>
             <ListItemText
               primary="Caffe"
-              onClick={() => navigate(AppRoutes.Caffe)}
+              onClick={() => router.push(AppRoutes.Caffe)}
             />
           </ListItemButton>
         </ListItem>
-
-        {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))} */}
       </List>
     </Box>
   );

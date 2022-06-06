@@ -1,5 +1,6 @@
+import { useRouter } from "next/router";
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AppMsgs from "../../../../constants/AppMsgs";
 import AppRoutes from "../../../../constants/AppRoutes";
 import { AuthContext } from "../../../../contexts/AuthContext";
@@ -14,7 +15,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { push } = useRouter();
 
   const submit = () => {
     if (!email || !password) {
@@ -25,7 +26,7 @@ const Login = () => {
       .then(() => {
         // returns UserCredentialImpl;
         alert(AppMsgs.LoggedIn);
-        navigate(AppRoutes.Home);
+        push(AppRoutes.Home);
       })
       .catch((err) => {
         alert(err.message);
