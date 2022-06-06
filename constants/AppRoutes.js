@@ -1,10 +1,10 @@
 const AppRoutes = {
   Home: "/",
-  Caffe: "/caffe",
+  Cafe: "/cafe",
   ChitChat: "/chit-chat",
   Signup: "/auth/signup",
   Login: "/auth/login",
-  ProductDetail: "/caffe/product/:id",
+  ProductDetail: "/cafe/product/:id",
 };
 
 export default AppRoutes;

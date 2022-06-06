@@ -1,6 +1,7 @@
-import AppDrawer from "../components/AppDrawer/AppDrawer";
-import ContextProviders from "../components/ContextProviders/ContextProviders";
-import Layout from "../components/Layout/Layout";
+import "bootstrap/dist/css/bootstrap.css";
+import AppDrawer from "../components/AppDrawer";
+import ContextProviders from "../components/ContextProviders";
+import Layout from "../components/Layout";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
