@@ -48,7 +48,7 @@ const Login = () => {
           <Button onClick={submit}>Submit</Button>
         </ButtonGroup>
         <p className="form-text text-center">
-          Don't have an account? <Link href={AppRoutes.Signup}>Signup</Link>{" "}
+          Don&apost have an account? <Link href={AppRoutes.Signup}>Signup</Link>{" "}
           instead.
         </p>
       </Form>
