@@ -15,9 +15,10 @@ const getProductComponent = (product) => {
       {product && (
         <div style={{ margin: "10px 0" }}>
           <img
+            alt=""
             src={product.img}
-            className="img-thumbnail"
-            style={{ height: "250px", width: "100%" }}
+            className="img-fluid"
+            style={{ height: "250px" }}
           />
           <p className={styles.productName}>{product.name}</p>
           <div className="d-flex justify-content-between">

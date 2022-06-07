@@ -45,7 +45,7 @@ const AppNavBar = ({ toggleDrawer }) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {"Developer's Cafe"}
+              Developer&apos;s Cafe BD
             </Typography>
             {!currentUser && (
               <Button

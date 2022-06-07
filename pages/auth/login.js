@@ -48,8 +48,8 @@ const Login = () => {
           <Button onClick={submit}>Submit</Button>
         </ButtonGroup>
         <p className="form-text text-center">
-          Don&apost have an account? <Link href={AppRoutes.Signup}>Signup</Link>{" "}
-          instead.
+          Don&apos;t have an account?{" "}
+          <Link href={AppRoutes.Signup}>Signup</Link> instead.
         </p>
       </Form>
     </>
