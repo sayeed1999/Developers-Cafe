@@ -23,10 +23,9 @@ const FilterableProducts = () => {
   }, [searchText]); // [searchText] -> will run on 'searchText' state change
 
   const filteredProducts = (text) => {
-    let p = productsInDB.filter((x) =>
+    return productsInDB.filter((x) =>
       x.name.toLowerCase().includes(text.toLowerCase())
     );
-    return p;
   };
 
   return (
