@@ -8,6 +8,7 @@ import {
   set,
 } from "firebase/database";
 import { createContext, useContext } from "react";
+import swal from "sweetalert";
 import AppMsgs from "../constants/AppMsgs";
 import { AuthContext } from "./AuthContext";
 
@@ -53,7 +54,7 @@ const PostContextProvider = (props) => {
       body: postBody,
       createdAt: new Date().toDateString(),
       userid: currentUser.uid,
-      username: displayName,
+      username: currentUser.displayName,
       comments: {},
     };
     return axios.post(
@@ -63,14 +64,18 @@ const PostContextProvider = (props) => {
   };
 
   const tapHeart = (postId, post) => {
-    const db = getDatabase();
-    const postRef = ref(db, "posts/" + postId);
-    if (!post.likes) post.likes = 0;
-    const tempEntity = {
-      ...post,
-      likes: post.likes + 1,
-    };
-    return set(postRef, tempEntity);
+    if (currentUser) {
+      const db = getDatabase();
+      const postRef = ref(db, "posts/" + postId);
+      if (!post.likes) post.likes = 0;
+      const tempEntity = {
+        ...post,
+        likes: post.likes + 1,
+      };
+      return set(postRef, tempEntity);
+    } else {
+      return swal("Error", AppMsgs.AuthenticationError, "error");
+    }
   };
 
   const value = {

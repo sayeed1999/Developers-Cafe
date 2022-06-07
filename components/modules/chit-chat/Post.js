@@ -20,7 +20,7 @@ const Post = ({ post, postId }) => {
 
   const onTapHeart = () => {
     tapHeart(postId, state)
-      .then(() => {
+      ?.then(() => {
         // now fetch the updated version of post
         fetchPostById(postId).then((updatedPost) => {
           setState(updatedPost);
