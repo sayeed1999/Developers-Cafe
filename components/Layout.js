@@ -4,6 +4,7 @@ const Layout = (props) => {
       <div className="row d-flex justify-content-center">
         <div className="col-9 col-sm-8 col-md-7 col-lg-6">{props.children}</div>
       </div>
+      <div style={{ height: "8vh" }}></div>
       <div
         style={{
           backgroundColor: "#000",
