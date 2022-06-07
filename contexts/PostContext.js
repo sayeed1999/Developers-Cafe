@@ -50,17 +50,21 @@ const PostContextProvider = (props) => {
   };
 
   const createPost = (postBody) => {
-    const newPost = {
-      body: postBody,
-      createdAt: new Date().toDateString(),
-      userid: currentUser.uid,
-      username: currentUser.displayName,
-      comments: {},
-    };
-    return axios.post(
-      `${process.env.NEXT_APP_DATABASE_URL}/posts.json`,
-      newPost
-    );
+    if (currentUser) {
+      const newPost = {
+        body: postBody,
+        createdAt: new Date().toDateString(),
+        userid: currentUser.uid,
+        username: currentUser.displayName,
+        comments: {},
+      };
+      return axios.post(
+        `${process.env.NEXT_APP_DATABASE_URL}/posts.json`,
+        newPost
+      );
+    } else {
+      swal("Error", AppMsgs.AuthenticationError, "error");
+    }
   };
 
   const tapHeart = (postId, post) => {

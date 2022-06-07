@@ -32,7 +32,7 @@ const ChitChat = () => {
       return;
     }
     createPost(postBody)
-      .then(() => {
+      ?.then(() => {
         setPostBody("");
         fetchAllPosts();
         swal("Success", AppMsgs.Created, "success");
