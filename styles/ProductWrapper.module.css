@@ -7,8 +7,6 @@
 
 .addToCartButton:hover {
   background-color: #fefefeaa;
-  font-weight: bold;
-  padding: 2px;
 }
 
 .addToCartButton:active {
