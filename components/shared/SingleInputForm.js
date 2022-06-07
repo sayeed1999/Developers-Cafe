@@ -1,7 +1,7 @@
 const SingleInputForm = ({
   state,
   setState,
-  type,
+  type = "text",
   onSubmit,
   buttonName = "Press",
   placeholder = "Type here..",

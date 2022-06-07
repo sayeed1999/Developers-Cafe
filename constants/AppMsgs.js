@@ -5,10 +5,11 @@ const AppMsgs = {
   Updated: "Updated Successfully",
   Failed: "Failed :(",
   OrderPlaced: "Order Placed Successfully",
-  ReviewPlaced: "Thank you for your review",
+  ReviewPlaced: "Your Review Has Been Placed",
   LoggedIn: "You have successfully logged into your account",
   LoggedOut: "You have been logged out from your account",
   SignedUp: "Account Signup Successful",
+  RequiredFieldsEmpty: "Required fields cannot be empty",
 };
 
 export default AppMsgs;

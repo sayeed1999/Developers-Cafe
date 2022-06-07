@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useContext, useState } from "react";
+import swal from "sweetalert";
 import Button from "../../components/shared/Button";
 import ButtonGroup from "../../components/shared/ButtonGroup";
 import CheckBoxInput from "../../components/shared/CheckBoxInput";
@@ -7,6 +8,7 @@ import EmailInput from "../../components/shared/EmailInput";
 import Form from "../../components/shared/Form";
 import PasswordInput from "../../components/shared/PasswordInput";
 import TextInput from "../../components/shared/TextInput";
+import AppMsgs from "../../constants/AppMsgs";
 import AppRoutes from "../../constants/AppRoutes";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -21,19 +23,19 @@ const Signup = () => {
 
   const submit = () => {
     if (!username || !email || !password || !confirmPassword || !agree) {
-      alert("Required fields empty");
+      swal("Warning", AppMsgs.RequiredFieldsEmpty, "warning");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Password & confirm password don't match");
+      swal("Warning", "Password & confirm password don't match", "warning");
       return;
     }
 
     try {
       signup(email, password, username);
     } catch (err) {
-      alert(err.message);
+      swal("Error", err.message, "error");
     }
   };
 

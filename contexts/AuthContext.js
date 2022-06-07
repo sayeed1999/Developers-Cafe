@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
+import swal from "sweetalert";
 import AppMsgs from "../constants/AppMsgs";
 import AppRoutes from "../constants/AppRoutes";
 import "../firebase";
@@ -36,11 +37,11 @@ const AuthContextProvider = ({ children }) => {
           displayName: username,
         }).then(() => {
           push(AppRoutes.Home);
-          alert(AppMsgs.SignedUp);
+          swal("Success", AppMsgs.SignedUp, "success");
         });
       })
       .catch((err) => {
-        alert(err.message);
+        swal("Error", err.message, "error");
       });
 
     const user = auth.currentUser;

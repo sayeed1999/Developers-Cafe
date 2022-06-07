@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import swal from "sweetalert";
 import Product from "../../../components/modules/cafe/Product";
 import SingleInputForm from "../../../components/shared/SingleInputForm";
 import AppMsgs from "../../../constants/AppMsgs";
@@ -29,11 +30,24 @@ const ProductDetail = () => {
   };
 
   const onRatingSubmit = () => {
+    if (
+      !(Number.isInteger(+yourRating) && +yourRating >= 1 && +yourRating <= 5)
+    ) {
+      return swal({
+        title: "Warning",
+        text: "Rating must be an integer between 1-5",
+        icon: "warning",
+      });
+    }
     giveProductReview(id, product, yourRating)
       .then(() => {
         getProductById();
         setYourRating();
-        alert(AppMsgs.ReviewPlaced);
+        swal({
+          title: "Hoorah!",
+          text: AppMsgs.ReviewPlaced,
+          icon: "success",
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -42,15 +56,13 @@ const ProductDetail = () => {
     if (!product.review) return 0.0;
     let reviews = Object.values(product.review);
     let sumOfReviews = reviews.reduce((a, b) => +a + +b);
-    let overallReview = (sumOfReviews / reviews.length).toFixed(1);
-    return overallReview;
+    return (sumOfReviews / reviews.length).toFixed(1);
   };
 
   const countUsersForRating = (rating) => {
     if (!product.review) return 0;
     let reviews = Object.values(product.review);
-    let ret = reviews.filter((x) => x == rating).length; // in js, 4 == '4'
-    return ret;
+    return reviews.filter((x) => x == rating).length; // in js, 4 == '4'
   };
 
   return (
@@ -69,6 +81,7 @@ const ProductDetail = () => {
                 <h6>Overall Review: {calculateOverallReview()}</h6>
                 {currentUser && (
                   <SingleInputForm
+                    type="number"
                     state={yourRating}
                     setState={setYourRating}
                     placeholder="Your rating between 1-5:"

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
+import swal from "sweetalert";
 import Button from "../../components/shared/Button";
 import ButtonGroup from "../../components/shared/ButtonGroup";
 import EmailInput from "../../components/shared/EmailInput";
@@ -19,17 +20,17 @@ const Login = () => {
 
   const submit = () => {
     if (!email || !password) {
-      return alert("Required fields empty");
+      return swal("Warning", AppMsgs.RequiredFieldsEmpty, "warning");
     }
 
     login(email, password)
       .then(() => {
         // returns UserCredentialImpl;
-        alert(AppMsgs.LoggedIn);
+        swal("Success", AppMsgs.LoggedIn, "success");
         push(AppRoutes.Home);
       })
       .catch((err) => {
-        alert(err.message);
+        swal("Error", err.message, "error");
       });
   };
 

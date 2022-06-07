@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import * as React from "react";
+import swal from "sweetalert";
 import AppMsgs from "../constants/AppMsgs";
 import AppRoutes from "../constants/AppRoutes";
 import { AuthContext } from "../contexts/AuthContext";
@@ -18,10 +19,10 @@ const AppNavBar = ({ toggleDrawer }) => {
     logout()
       .then(() => {
         router.push(AppRoutes.Home);
-        alert(AppMsgs.LoggedOut);
+        swal("Success", AppMsgs.LoggedOut, "success");
       })
       .catch((err) => {
-        alert(err.message);
+        swal("Error", err.message, "error");
       });
   };
 

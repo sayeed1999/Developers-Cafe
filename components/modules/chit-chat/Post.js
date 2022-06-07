@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useContext, useState } from "react";
+import swal from "sweetalert";
 import { PostContext } from "../../../contexts/PostContext";
 import Comment from "./Comment";
 
@@ -26,7 +27,7 @@ const Post = ({ post, postId }) => {
         });
       })
       .catch((err) => {
-        alert(err.message);
+        swal("Error", err.message, "error");
       });
   };
 

@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
+import swal from "sweetalert";
 import Post from "../../components/modules/chit-chat/Post";
 import SingleInputForm from "../../components/shared/SingleInputForm";
+import AppMsgs from "../../constants/AppMsgs";
 import { AuthContext } from "../../contexts/AuthContext";
 import { PostContext } from "../../contexts/PostContext";
 
@@ -20,23 +22,23 @@ const ChitChat = () => {
         setPostsToDisplay(val); // Object
       })
       .catch((err) => {
-        alert(err.message);
+        swal("Error", err.message, "error");
       });
   };
 
   const createNewPost = () => {
     if (!postBody) {
-      alert("post body cannot be empty");
+      swal("Info", "Cannot post an empty post", "Info");
       return;
     }
     createPost(postBody)
       .then(() => {
         setPostBody("");
         fetchAllPosts();
-        alert(AppMsgs.Created);
+        swal("Success", AppMsgs.Created, "success");
       })
       .catch((err) => {
-        alert(err.message);
+        swal("Error", err.message, "error");
       });
   };
 
