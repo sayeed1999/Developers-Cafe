@@ -10,7 +10,7 @@ const Layout = (props) => {
           backgroundColor: "#000",
           color: "#fff",
           width: "100%",
-          height: "7vh",
+          height: "6vh",
           position: "fixed",
           zIndex: "10",
           bottom: "0",
@@ -19,11 +19,10 @@ const Layout = (props) => {
           alignItems: "center",
         }}
       >
-        <span style={{ fontWeight: "600" }}>
+        <span style={{ fontWeight: "400", fontSize: "small" }}>
           Developed By:-{" "}
           <a
             href="https://www.facebook.com/mdsayeed.rahman"
-            passHref={true}
             target="_blank"
             rel="noreferrer"
           >

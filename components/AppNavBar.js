@@ -32,10 +32,10 @@ const AppNavBar = ({ toggleDrawer }) => {
         sx={{ flexGrow: 1 }}
         style={{ position: "fixed", width: "100vw", zIndex: "999" }}
       >
-        <AppBar position="static">
+        <AppBar>
           <Toolbar>
             <IconButton
-              size="large"
+              size="medium"
               edge="start"
               color="inherit"
               aria-label="menu"
