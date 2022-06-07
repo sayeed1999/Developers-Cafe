@@ -22,7 +22,6 @@ const ProductContextProvider = ({ children }) => {
     try {
       const snapshot = await get(prodQuery);
       if (snapshot.exists()) {
-        console.log("all products fetched...");
         return snapshot.val();
       } else {
         throw Error(AppMsgs.NoDataFound);
@@ -52,12 +51,12 @@ const ProductContextProvider = ({ children }) => {
     const db = getDatabase();
     const productRef = ref(db, "products/" + productId);
     // buisness of review here..
-    const tempEntity = {
-      ...product,
-      // review: post.likes + 1,
-    };
-    console.log(yourReview);
-    return set(productRef, tempEntity);
+    let tempProduct = { ...product, review: product.review ?? {} };
+    let tempReview = tempProduct.review;
+    tempReview[currentUser.uid] = yourReview;
+    tempProduct.review = tempReview;
+
+    return set(productRef, tempProduct);
   };
 
   const value = {

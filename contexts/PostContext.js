@@ -23,7 +23,6 @@ const PostContextProvider = (props) => {
     try {
       const snapshot = await get(postsQuery);
       if (snapshot.exists()) {
-        console.log("all posts fetched...");
         return snapshot.val();
       } else {
         throw Error(AppMsgs.NoDataFound);

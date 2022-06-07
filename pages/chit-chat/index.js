@@ -7,7 +7,7 @@ import { PostContext } from "../../contexts/PostContext";
 const ChitChat = () => {
   const { fetchPosts, createPost } = useContext(PostContext);
   const { currentUser } = useContext(AuthContext);
-  const [postsToDisplay, setPostsToDisplay] = useState([]);
+  const [postsToDisplay, setPostsToDisplay] = useState({});
   const [postBody, setPostBody] = useState("");
 
   useEffect(() => {
@@ -52,11 +52,12 @@ const ChitChat = () => {
           />
         )}
       </div>
-      {Object?.entries(postsToDisplay).map((entry) => (
-        <div className="col-md-12" key={entry[0]}>
-          <Post postId={entry[0]} post={entry[1]} />
-        </div>
-      ))}
+      {postsToDisplay &&
+        Object.entries(postsToDisplay).map((entry) => (
+          <div className="col-md-12" key={entry[0]}>
+            <Post postId={entry[0]} post={entry[1]} />
+          </div>
+        ))}
     </div>
   );
 };
