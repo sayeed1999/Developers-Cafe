@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/SearchBar.module.css";
 
-const SearchBar = ({ text, change }) => {
+const SearchBar = ({ state, setState }) => {
   const [placeholder, setPlaceholder] = useState("");
 
   useEffect(() => {
@@ -23,8 +23,8 @@ const SearchBar = ({ text, change }) => {
       className={`${styles.searchBar} form-control`}
       type="text"
       placeholder={placeholder}
-      value={text}
-      onChange={() => change(event.target.value)}
+      value={state}
+      onChange={(e) => setState(e.target.value)}
     />
   );
 };
