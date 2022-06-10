@@ -39,12 +39,12 @@ const AppNavBar = ({ toggleDrawer }) => {
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{ mr: 1 }}
               onClick={toggleDrawer}
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="inherit" sx={{ flexGrow: 1 }}>
               Developer&apos;s Cafe BD
             </Typography>
             {!currentUser && (
@@ -65,14 +65,13 @@ const AppNavBar = ({ toggleDrawer }) => {
             )}
             {!!currentUser && (
               <Typography
-                variant="overline"
+                variant="body2"
                 style={{
                   textDecoration: "underline",
-                  marginRight: "5px",
                   fontSize: "12px",
                 }}
               >
-                Welcome, {currentUser.displayName}!
+                Hi, {currentUser.displayName}!
               </Typography>
             )}
             {!!currentUser && (

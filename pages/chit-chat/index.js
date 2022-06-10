@@ -44,7 +44,7 @@ const ChitChat = () => {
 
   return (
     <div className="row">
-      <div className="col-md-12">
+      <div className="col-md-12 mt-4 mb-2">
         {currentUser && (
           <SingleInputForm
             state={postBody}

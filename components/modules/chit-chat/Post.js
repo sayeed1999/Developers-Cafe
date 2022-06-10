@@ -66,7 +66,9 @@ const Post = ({ post, postId }) => {
 
         <b>Comments</b>
         <IconButton onClick={() => setHideComments((prev) => !prev)}>
-          {hideComments ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          {/* {hideComments ? <ExpandMoreIcon /> : <ExpandLessIcon />} */}
+          {hideComments && <ExpandMoreIcon />}
+          {!hideComments && <ExpandLessIcon />}
         </IconButton>
         {!hideComments && (
           <div className="row">
