@@ -5,14 +5,12 @@ import swal from "sweetalert";
 import Product from "../../../components/modules/cafe/Product";
 import SingleInputForm from "../../../components/shared/SingleInputForm";
 import AppMsgs from "../../../constants/AppMsgs";
-import { AuthContext } from "../../../contexts/AuthContext";
 import { ProductContext } from "../../../contexts/ProductContext";
 
 const ProductDetail = () => {
   const router = useRouter();
   const { id } = router.query;
   const { fetchProductById, giveProductReview } = useContext(ProductContext);
-  const { currentUser } = useContext(AuthContext);
   const [product, setProduct] = useState();
   const [yourRating, setYourRating] = useState();
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Button from "../../components/shared/Button";
 import ButtonGroup from "../../components/shared/ButtonGroup";
@@ -9,29 +10,41 @@ import Form from "../../components/shared/Form";
 import PasswordInput from "../../components/shared/PasswordInput";
 import AppMsgs from "../../constants/AppMsgs";
 import AppRoutes from "../../constants/AppRoutes";
-import { AuthContext } from "../../contexts/AuthContext";
+import { login, resetStatus } from "../../store/reducers/authReducer";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const authStatus = useSelector((state) => state.auth.status);
+  const error = useSelector((state) => state.auth.error);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useContext(AuthContext);
   const { push } = useRouter();
+
+  useEffect(() => {
+    if (authStatus === "succeeded") {
+      swal({
+        title: "Success",
+        text: AppMsgs.LoggedIn,
+        icon: "success",
+      });
+      push(AppRoutes.ChitChat);
+    } else if (authStatus === "failed") {
+      swal({
+        title: "Error",
+        text: error,
+        icon: "error",
+      });
+    }
+    dispatch(resetStatus());
+  }, [authStatus]);
 
   const submit = () => {
     if (!email || !password) {
       return swal("Warning", AppMsgs.RequiredFieldsEmpty, "warning");
     }
-
-    login(email, password)
-      .then(() => {
-        // returns UserCredentialImpl;
-        swal("Success", AppMsgs.LoggedIn, "success");
-        push(AppRoutes.Home);
-      })
-      .catch((err) => {
-        swal("Error", err.message, "error");
-      });
+    dispatch(login({ email, password }));
   };
 
   return (

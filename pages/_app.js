@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import Head from "next/head";
 import { Provider } from "react-redux";
 import Layout from "../components/Layout";
+import Loader from "../components/Loader";
 import store from "../store";
 import "../styles/globals.css";
 
@@ -12,6 +13,7 @@ function MyApp({ Component, pageProps }) {
         <title>Developer&apos;s Cafe, BD 🔥</title>
       </Head>
       <Provider store={store}>
+        <Loader />
         <Layout>
           <Component {...pageProps} />
         </Layout>

@@ -5,25 +5,41 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import * as React from "react";
-import swal from "sweetalert";
-import AppMsgs from "../constants/AppMsgs";
+import { useDispatch, useSelector } from "react-redux";
 import AppRoutes from "../constants/AppRoutes";
-import { AuthContext } from "../contexts/AuthContext";
+import { logout } from "../store/reducers/authReducer";
 
 const AppNavBar = ({ toggleDrawer }) => {
-  const { currentUser, logout } = React.useContext(AuthContext);
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const authStatus = useSelector((state) => state.auth.status);
+  const error = useSelector((state) => state.auth.error);
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(getCurrentUser());
+  // }, []); // first time only to check authentation state
+
+  // useEffect(() => {
+  //   if (authStatus === "succeeded") {
+  //     swal({
+  //       title: "Success",
+  //       text: AppMsgs.LoggedOut,
+  //       icon: "success",
+  //     });
+  //     router.push(AppRoutes.Home);
+  //   } else if (authStatus === "failed") {
+  //     swal({
+  //       title: "Error",
+  //       text: error,
+  //       icon: "error",
+  //     });
+  //   }
+  //   dispatch(resetStatus());
+  // }, [authStatus]);
 
   const onLogoutPress = () => {
-    logout()
-      .then(() => {
-        router.push(AppRoutes.Home);
-        swal("Success", AppMsgs.LoggedOut, "success");
-      })
-      .catch((err) => {
-        swal("Error", err.message, "error");
-      });
+    dispatch(logout());
   };
 
   return (

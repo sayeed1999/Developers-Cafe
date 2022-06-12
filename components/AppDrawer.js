@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import { useRouter } from "next/router";
 import * as React from "react";
 import AppRoutes from "../constants/AppRoutes";
-// import AppNavBar from "./AppNavBar";
+import AppNavBar from "./AppNavBar";
 
 const AppDrawer = ({ children }) => {
   const [state, setState] = React.useState(false);
@@ -58,7 +58,7 @@ const AppDrawer = ({ children }) => {
   return (
     <div>
       <React.Fragment key={anchor}>
-        {/* <AppNavBar toggleDrawer={() => toggleDrawer(true)} /> */}
+        <AppNavBar toggleDrawer={() => toggleDrawer(true)} />
         <Drawer
           anchor={anchor}
           open={state}

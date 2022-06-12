@@ -6,15 +6,12 @@ import {
   ref,
   set,
 } from "firebase/database";
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import AppMsgs from "../constants/AppMsgs";
-import { AuthContext } from "./AuthContext";
 
 export const ProductContext = createContext();
 
 const ProductContextProvider = ({ children }) => {
-  const { currentUser } = useContext(AuthContext);
-
   const fetchProducts = async () => {
     const db = getDatabase();
     const prodRef = ref(db, "products");

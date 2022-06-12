@@ -7,19 +7,27 @@ import { fetchPosts } from "../../store/reducers/postsReducer";
 
 const ChitChat = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const posts = useSelector((state) => state.posts.posts);
 
-  const postStatus = useSelector((state) => state.posts.status);
+  const postsStatus = useSelector((state) => state.posts.status);
   const error = useSelector((state) => state.posts.error);
 
   const [postsToDisplay, setPostsToDisplay] = useState({});
   const [postBody, setPostBody] = useState("");
 
   useEffect(() => {
-    if (postStatus === "idle") {
+    if (postsStatus === "idle") {
       dispatch(fetchPosts());
     }
-  }, [postStatus, dispatch]);
+    if (postsStatus === "failed") {
+      swal({
+        title: "Error",
+        text: "Poor internet connection!",
+        icon: "error",
+      });
+    }
+  }, [postsStatus, dispatch]);
 
   useEffect(() => {
     setPostsToDisplay(() => posts);
@@ -35,7 +43,7 @@ const ChitChat = () => {
   return (
     <div className="row">
       <div className="col-md-12 mt-4 mb-2">
-        {1 == 1 && (
+        {currentUser && (
           <SingleInputForm
             state={postBody}
             setState={setPostBody}
