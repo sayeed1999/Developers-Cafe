@@ -1,8 +1,8 @@
 import "bootstrap/dist/css/bootstrap.css";
 import Head from "next/head";
-import AppDrawer from "../components/AppDrawer";
-import ContextProviders from "../components/ContextProviders";
+import { Provider } from "react-redux";
 import Layout from "../components/Layout";
+import store from "../store";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
@@ -11,12 +11,11 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Developer&apos;s Cafe, BD 🔥</title>
       </Head>
-      <ContextProviders>
-        <AppDrawer />
+      <Provider store={store}>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </ContextProviders>
+      </Provider>
     </>
   );
 }

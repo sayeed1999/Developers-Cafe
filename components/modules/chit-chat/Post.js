@@ -8,27 +8,24 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useContext, useState } from "react";
-import swal from "sweetalert";
-import { PostContext } from "../../../contexts/PostContext";
+import { useState } from "react";
 import Comment from "./Comment";
 
 const Post = ({ post, postId }) => {
   const [hideComments, setHideComments] = useState(true);
   const [state, setState] = useState(post);
-  const { fetchPostById, tapHeart } = useContext(PostContext);
 
   const onTapHeart = () => {
-    tapHeart(postId, state)
-      ?.then(() => {
-        // now fetch the updated version of post
-        fetchPostById(postId).then((updatedPost) => {
-          setState(updatedPost);
-        });
-      })
-      .catch((err) => {
-        swal("Error", err.message, "error");
-      });
+    // tapHeart(postId, state)
+    //   ?.then(() => {
+    //     // now fetch the updated version of post
+    //     fetchPostById(postId).then((updatedPost) => {
+    //       setState(updatedPost);
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     swal("Error", err.message, "error");
+    //   });
   };
 
   return (
