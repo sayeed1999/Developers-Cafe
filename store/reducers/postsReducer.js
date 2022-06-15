@@ -52,14 +52,14 @@ export const tapHeart = createAsyncThunk(
   async (postId, post) => {
     // if (currentUser) {
 
-    const tempEntity = {
-      ...post,
-      likes: post.likes + 1,
-    };
+    if (!post.likes) post["likes"] = 0;
+    post["likes"]++;
+
     const response = await axios.put(
       `${process.env.NEXT_APP_DATABASE_URL}/posts/${postId}`,
-      tempEntity
+      post
     );
+    console.log(response);
     return response.data;
 
     // } else {
@@ -68,23 +68,27 @@ export const tapHeart = createAsyncThunk(
   }
 );
 
+const methods = [fetchPosts, fetchPostById, createPost, tapHeart];
+
 const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder
-      .addCase(fetchPosts.pending, (state, action) => {
-        state.status = "loading";
-      })
-      .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.posts = action.payload;
-      })
-      .addCase(fetchPosts.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+    methods.forEach((m) => {
+      builder
+        .addCase(m.pending, (state, _action) => {
+          state.status = "loading";
+        })
+        .addCase(m.fulfilled, (state, action) => {
+          state.status = "succeeded";
+          state.posts = action.payload;
+        })
+        .addCase(m.rejected, (state, action) => {
+          state.status = "failed";
+          state.error = action.error.message;
+        });
+    });
   },
 });
 

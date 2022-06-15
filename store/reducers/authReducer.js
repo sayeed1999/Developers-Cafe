@@ -49,64 +49,41 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   await signOut(auth);
 });
 
+const methods = [getCurrentUser, signup, login, logout];
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    resetStatus(state, action) {
+    resetStatus(state, _action) {
       state.status = "idle";
     },
   },
   extraReducers(builder) {
-    builder
-      // pending
-      .addCase(getCurrentUser.pending, (state, action) => {
-        state.status = "loading";
-      })
-      .addCase(signup.pending, (state, action) => {
-        state.status = "loading";
-      })
-      .addCase(login.pending, (state, action) => {
-        state.status = "loading";
-      })
-      .addCase(logout.pending, (state, action) => {
-        state.status = "loading";
-      })
-      // fulfilled
-      .addCase(getCurrentUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.currentUser = action.payload;
-      })
-      .addCase(signup.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.currentUser = action.payload.user;
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        // console.log(action); {payload: {user: {}}}
-        state.currentUser = action.payload.user;
-      })
-      .addCase(logout.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.currentUser = null;
-      })
-      // failed
-      .addCase(getCurrentUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-      .addCase(signup.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-      .addCase(login.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-      .addCase(logout.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+    methods.forEach((m) => {
+      builder
+        .addCase(m.pending, (state, _action) => {
+          state.status = "loading";
+        })
+        .addCase(m.fulfilled, (state, action) => {
+          state.status = "succeeded";
+          switch (m) {
+            case getCurrentUser:
+              state.currentUser = action.payload;
+              break;
+            case logout:
+              state.currentUser = null;
+              break;
+            default:
+              state.currentUser = action.payload.user;
+              break;
+          }
+        })
+        .addCase(m.rejected, (state, action) => {
+          state.status = "failed";
+          state.error = action.error.message;
+        });
+    });
   },
 });
 

@@ -9,32 +9,22 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { tapHeart } from "../../../store/reducers/postsReducer";
 import Comment from "./Comment";
 
 const Post = ({ post, postId }) => {
   const [hideComments, setHideComments] = useState(true);
   const [state, setState] = useState(post);
-
-  const onTapHeart = () => {
-    // tapHeart(postId, state)
-    //   ?.then(() => {
-    //     // now fetch the updated version of post
-    //     fetchPostById(postId).then((updatedPost) => {
-    //       setState(updatedPost);
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     swal("Error", err.message, "error");
-    //   });
-  };
+  const dispatch = useDispatch();
 
   return (
     <Card
       sx={{ minWidth: 275 }}
       style={{
-        backgroundColor: "rgba(245, 245, 245, 0.753)",
-        margin: "5px 0",
+        margin: "8px 0",
       }}
+      elevation="0"
     >
       <CardContent>
         <div className="d-flex justify-content-between align-items-center">
@@ -51,7 +41,7 @@ const Post = ({ post, postId }) => {
           <Tooltip title="Tap to increase Heart">
             <IconButton
               onClick={() => {
-                onTapHeart();
+                dispatch(tapHeart(postId, post));
               }}
             >
               <FavoriteIcon style={{ color: "darkred" }} />
@@ -72,9 +62,17 @@ const Post = ({ post, postId }) => {
             <div className="col-1"></div>
             <div className="col-11">
               {/* Object.entries() returns [key, value] */}
-              {Object.entries(state.comments).map((entry) => (
-                <Comment comment={entry[1]} key={entry[0]} />
-              ))}
+              {state.comments ? (
+                Object.entries(state.comments).map((entry) => (
+                  <Comment comment={entry[1]} key={entry[0]} />
+                ))
+              ) : (
+                <div className="d-flex justify-content-between align-items-center">
+                  <hr className="flex-grow-1" />
+                  <small className="mx-3">No comments found</small>
+                  <hr className="flex-grow-1" />
+                </div>
+              )}
             </div>
           </div>
         )}
