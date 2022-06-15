@@ -4,7 +4,14 @@ const Comment = (props) => {
   const { comment } = props;
 
   return (
-    <Card style={{ margin: "5px 0" }}>
+    <Card
+      style={{
+        margin: "5px 0",
+        backgroundColor: "#eee",
+        border: "solid 1px orange",
+      }}
+      elevation={0}
+    >
       <CardContent>
         <div className="d-flex justify-content-between align-items-center">
           <Typography variant="overline">{comment.username}</Typography>

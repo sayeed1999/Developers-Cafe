@@ -1,33 +1,33 @@
 import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Product from "../../../components/modules/cafe/Product";
 import SingleInputForm from "../../../components/shared/SingleInputForm";
 import AppMsgs from "../../../constants/AppMsgs";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { ProductContext } from "../../../contexts/ProductContext";
+import {
+  fetchProductById,
+  giveProductReview,
+} from "../../../store/reducers/productsReducer";
 
 const ProductDetail = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { fetchProductById, giveProductReview } = useContext(ProductContext);
-  const { currentUser } = useContext(AuthContext);
-  const [product, setProduct] = useState();
+  const dispatch = useDispatch();
+  let product = useSelector((state) => state.products.product);
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const [yourRating, setYourRating] = useState();
 
   useEffect(() => {
-    getProductById();
+    dispatch(fetchProductById(id));
   }, []);
 
-  const getProductById = () => {
-    fetchProductById(id).then((productInDB) => {
-      setProduct((prev) => productInDB);
-      if (productInDB?.review && currentUser) {
-        setYourRating((prev) => productInDB?.review[currentUser.uid]);
-      }
-    });
-  };
+  useEffect(() => {
+    if (product?.review && currentUser) {
+      setYourRating(() => product.review[currentUser.uid]);
+    }
+  }, [product]);
 
   const onRatingSubmit = () => {
     if (

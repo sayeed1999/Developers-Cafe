@@ -1,45 +1,43 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Post from "../../components/modules/chit-chat/Post";
 import SingleInputForm from "../../components/shared/SingleInputForm";
-import AppMsgs from "../../constants/AppMsgs";
-import { AuthContext } from "../../contexts/AuthContext";
-import { PostContext } from "../../contexts/PostContext";
+import { fetchPosts } from "../../store/reducers/postsReducer";
 
 const ChitChat = () => {
-  const { fetchPosts, createPost } = useContext(PostContext);
-  const { currentUser } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const posts = useSelector((state) => state.posts.posts);
+
+  const postsStatus = useSelector((state) => state.posts.status);
+  const error = useSelector((state) => state.posts.error);
+
   const [postsToDisplay, setPostsToDisplay] = useState({});
   const [postBody, setPostBody] = useState("");
 
   useEffect(() => {
-    fetchAllPosts();
-  }, []);
-
-  const fetchAllPosts = () => {
-    fetchPosts()
-      .then((val) => {
-        setPostsToDisplay(val); // Object
-      })
-      .catch((err) => {
-        swal("Error", err.message, "error");
+    if (postsStatus === "idle") {
+      dispatch(fetchPosts());
+    }
+    if (postsStatus === "failed") {
+      swal({
+        title: "Error",
+        text: "Poor internet connection!",
+        icon: "error",
       });
-  };
+    }
+  }, [postsStatus, dispatch]);
+
+  useEffect(() => {
+    setPostsToDisplay(() => posts);
+  }, [posts]);
 
   const createNewPost = () => {
     if (!postBody) {
       swal("Info", "Cannot post an empty post", "Info");
       return;
     }
-    createPost(postBody)
-      ?.then(() => {
-        setPostBody("");
-        fetchAllPosts();
-        swal("Success", AppMsgs.Created, "success");
-      })
-      .catch((err) => {
-        swal("Error", err.message, "error");
-      });
   };
 
   return (
