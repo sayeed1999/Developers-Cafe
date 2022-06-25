@@ -62,7 +62,7 @@ const Post = ({ post, postId }) => {
             <div className="col-1"></div>
             <div className="col-11">
               {/* Object.entries() returns [key, value] */}
-              {state.comments ? (
+              {state.comments && state.comments.length > 0 ? (
                 Object.entries(state.comments).map((entry) => (
                   <Comment comment={entry[1]} key={entry[0]} />
                 ))

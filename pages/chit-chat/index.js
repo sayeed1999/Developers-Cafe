@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Post from "../../components/modules/chit-chat/Post";
 import SingleInputForm from "../../components/shared/SingleInputForm";
-import { fetchPosts } from "../../store/reducers/postsReducer";
+import { createPost, fetchPosts } from "../../store/reducers/postsReducer";
 
 const ChitChat = () => {
   const dispatch = useDispatch();
@@ -28,9 +28,18 @@ const ChitChat = () => {
 
   const createNewPost = () => {
     if (!postBody) {
-      swal("Info", "Cannot post an empty post", "Info");
-      return;
+      return swal("Info", "Cannot post an empty post", "Info");
     }
+
+    dispatch(
+      createPost({
+        body: postBody,
+        createdAt: new Date().toDateString(),
+        userid: currentUser.userid,
+        username: currentUser.userame,
+        comments: [],
+      })
+    );
   };
 
   return (

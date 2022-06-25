@@ -13,6 +13,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     axios.interceptors.request.use((req) => {
       req.headers = {
+        Authorization: "Bearer " + localStorage.getItem("token"),
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",

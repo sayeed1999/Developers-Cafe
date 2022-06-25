@@ -3,14 +3,9 @@ import axios from "axios";
 
 const initialState = {
   currentUser: null,
-  token: null,
   status: "idle",
   error: null,
 };
-
-export const getCurrentUser = createAsyncThunk("auth/currentUser", () => {
-  return null;
-});
 
 export const signup = createAsyncThunk(
   "auth/signup",
@@ -39,7 +34,7 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   return null;
 });
 
-const methods = [getCurrentUser, signup, login, logout];
+const methods = [signup, login, logout];
 
 const authSlice = createSlice({
   name: "auth",
@@ -60,12 +55,11 @@ const authSlice = createSlice({
           switch (m) {
             case login:
               state.currentUser = action.payload.user;
-              state.token = action.payload.token;
-              // console.log(state.currentUser, state.token);
+              localStorage.setItem("token", action.payload.token);
               break;
             case logout:
               state.currentUser = null;
-              state.token = null;
+              localStorage.removeItem("token");
               break;
             default:
               break;

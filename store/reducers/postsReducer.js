@@ -8,7 +8,9 @@ const initialState = {
 };
 
 export const fetchPosts = createAsyncThunk("posts/getAll", async () => {
-  const response = await axios.get(`${process.env.NEXT_APP_API_URL}/posts`);
+  const response = await axios.get(
+    `${process.env.NEXT_APP_API_URL}/newsfeed/posts`
+  );
   return response.data;
 });
 
@@ -16,7 +18,7 @@ export const fetchPostById = createAsyncThunk(
   "posts/getOne",
   async (postId) => {
     const response = await axios.get(
-      `${process.env.NEXT_APP_API_URL}/posts/${postId}`
+      `${process.env.NEXT_APP_API_URL}/newsfeed/posts/${postId}`
     );
     return response.data;
   }
@@ -24,45 +26,25 @@ export const fetchPostById = createAsyncThunk(
 
 export const createPost = createAsyncThunk(
   "posts/createOne",
-  async (postBody) => {
-    // if (currentUser) {
-
-    const newPost = {
-      body: postBody,
-      createdAt: new Date().toDateString(),
-      userid: currentUser.uid,
-      username: currentUser.displayName,
-    };
+  async (newPost) => {
     const response = await axios.post(
-      `${process.env.NEXT_APP_API_URL}/posts`,
+      `${process.env.NEXT_APP_API_URL}/newsfeed/posts`,
       newPost
     );
     return response.data;
-
-    // } else {
-    //   swal("Error", AppMsgs.AuthenticationError, "error");
-    // }
   }
 );
 
 export const tapHeart = createAsyncThunk(
   "posts/updateOne",
   async (postId, post) => {
-    // if (currentUser) {
-
     if (!post.likes) post["likes"] = 0;
     post["likes"]++;
-
     const response = await axios.put(
-      `${process.env.NEXT_APP_DATABASE_URL}/posts/${postId}`,
+      `${process.env.NEXT_APP_DATABASE_URL}/newsfeed/posts/${postId}`,
       post
     );
-    console.log(response);
     return response.data;
-
-    // } else {
-    //   return swal("Error", AppMsgs.AuthenticationError, "error");
-    // }
   }
 );
 
@@ -80,6 +62,7 @@ const postsSlice = createSlice({
         })
         .addCase(m.fulfilled, (state, action) => {
           state.status = "succeeded";
+          console.log(action.payload);
           state.posts = action.payload;
         })
         .addCase(m.rejected, (state, action) => {
