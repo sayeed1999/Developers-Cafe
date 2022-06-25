@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
+import swal from "sweetalert";
 import Layout from "../components/Layout";
 import Loader from "../components/Loader";
 import store from "../store";
@@ -22,9 +23,18 @@ function MyApp({ Component, pageProps }) {
       return req;
     });
 
-    axios.interceptors.response.use((res) => {
-      return res;
-    });
+    axios.interceptors.response.use(
+      (res) => {
+        return res;
+      },
+      (err) => {
+        const error = err.response.data.error;
+        swal({
+          text: `"${error.message ?? "Internet connection error"}"`,
+          icon: "error",
+        });
+      }
+    );
   }, []);
 
   return (

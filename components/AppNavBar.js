@@ -5,7 +5,9 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import AppMsgs from "../constants/AppMsgs";
 import AppRoutes from "../constants/AppRoutes";
 import { logout } from "../store/reducers/authReducer";
 
@@ -16,27 +18,16 @@ const AppNavBar = ({ toggleDrawer }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getCurrentUser());
-  // }, []); // first time only to check authentation state
-
-  // useEffect(() => {
-  //   if (authStatus === "succeeded") {
-  //     swal({
-  //       title: "Success",
-  //       text: AppMsgs.LoggedOut,
-  //       icon: "success",
-  //     });
-  //     router.push(AppRoutes.Home);
-  //   } else if (authStatus === "failed") {
-  //     swal({
-  //       title: "Error",
-  //       text: error,
-  //       icon: "error",
-  //     });
-  //   }
-  //   dispatch(resetStatus());
-  // }, [authStatus]);
+  useEffect(() => {
+    if (authStatus === "succeeded") {
+      swal({
+        title: "Success",
+        text: AppMsgs.LoggedOut,
+        icon: "success",
+      });
+      router.push(AppRoutes.Login);
+    }
+  }, [authStatus]);
 
   const onLogoutPress = () => {
     dispatch(logout());
@@ -87,7 +78,7 @@ const AppNavBar = ({ toggleDrawer }) => {
                   fontSize: "12px",
                 }}
               >
-                Hi, {currentUser.displayName}!
+                Hi, {currentUser.username}!
               </Typography>
             )}
             {!!currentUser && (

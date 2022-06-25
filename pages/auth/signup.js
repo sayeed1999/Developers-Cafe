@@ -34,13 +34,7 @@ const Signup = () => {
         text: AppMsgs.SignedUp,
         icon: "success",
       });
-      push(AppRoutes.ChitChat);
-    } else if (authStatus === "failed") {
-      swal({
-        title: "Error",
-        text: error,
-        icon: "error",
-      });
+      push(AppRoutes.Login);
     }
     dispatch(resetStatus());
   }, [authStatus]);
