@@ -8,9 +8,7 @@ const initialState = {
 };
 
 export const fetchPosts = createAsyncThunk("posts/getAll", async () => {
-  const response = await axios.get(
-    `${process.env.NEXT_APP_DATABASE_URL}/posts.json`
-  );
+  const response = await axios.get(`${process.env.NEXT_APP_API_URL}/posts`);
   return response.data;
 });
 
@@ -18,7 +16,7 @@ export const fetchPostById = createAsyncThunk(
   "posts/getOne",
   async (postId) => {
     const response = await axios.get(
-      `${process.env.NEXT_APP_DATABASE_URL}/posts/${postId}`
+      `${process.env.NEXT_APP_API_URL}/posts/${postId}`
     );
     return response.data;
   }
@@ -36,7 +34,7 @@ export const createPost = createAsyncThunk(
       username: currentUser.displayName,
     };
     const response = await axios.post(
-      `${process.env.NEXT_APP_DATABASE_URL}/posts.json`,
+      `${process.env.NEXT_APP_API_URL}/posts`,
       newPost
     );
     return response.data;

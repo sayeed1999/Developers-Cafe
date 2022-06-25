@@ -20,13 +20,6 @@ const ChitChat = () => {
     if (postsStatus === "idle") {
       dispatch(fetchPosts());
     }
-    if (postsStatus === "failed") {
-      swal({
-        title: "Error",
-        text: "Poor internet connection!",
-        icon: "error",
-      });
-    }
   }, [postsStatus, dispatch]);
 
   useEffect(() => {

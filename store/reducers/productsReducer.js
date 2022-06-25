@@ -9,9 +9,7 @@ const initialState = {
 };
 
 export const fetchProducts = createAsyncThunk("products/getAll", async () => {
-  const response = await axios.get(
-    `${process.env.NEXT_APP_DATABASE_URL}/products.json`
-  );
+  const response = await axios.get(`${process.env.NEXT_APP_API_URL}/products`);
   return response.data;
 });
 
@@ -19,7 +17,7 @@ export const fetchProductById = createAsyncThunk(
   "products/getOne",
   async (id) => {
     const response = await axios.get(
-      `${process.env.NEXT_APP_DATABASE_URL}/products/${id}`
+      `${process.env.NEXT_APP_API_URL}/products/${id}`
     );
     return response.data;
   }
@@ -31,7 +29,7 @@ export const giveProductReview = createAsyncThunk(
     if (!product.review) product.review = {};
     product.review[currentUser.uid] = yourReview;
     const response = await axios.post(
-      `${process.env.NEXT_APP_DATABASE_URL}/products/${id}`,
+      `${process.env.NEXT_APP_API_URL}/products/${id}`,
       product
     );
     return response.data;
