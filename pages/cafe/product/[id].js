@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Product from "../../../components/modules/cafe/Product";
 import SingleInputForm from "../../../components/shared/SingleInputForm";
-import AppMsgs from "../../../constants/AppMsgs";
 import {
   fetchProductById,
   giveProductReview,
@@ -24,8 +23,8 @@ const ProductDetail = () => {
   }, []);
 
   useEffect(() => {
-    if (product?.review && currentUser) {
-      setYourRating(() => product.review[currentUser.uid]);
+    if (product?.rating && currentUser) {
+      setYourRating(() => +product.rating[currentUser.userid]);
     }
   }, [product]);
 
@@ -39,30 +38,20 @@ const ProductDetail = () => {
         icon: "warning",
       });
     }
-    giveProductReview(id, product, yourRating)
-      .then(() => {
-        getProductById();
-        setYourRating();
-        swal({
-          title: "Hoorah!",
-          text: AppMsgs.ReviewPlaced,
-          icon: "success",
-        });
-      })
-      .catch((err) => console.log(err));
+    dispatch(giveProductReview({ product, yourRating }));
   };
 
-  const calculateOverallReview = () => {
-    if (!product.review) return 0.0;
-    let reviews = Object.values(product.review);
-    let sumOfReviews = reviews.reduce((a, b) => +a + +b);
-    return (sumOfReviews / reviews.length).toFixed(1);
+  const calculateOverallRating = () => {
+    if (!product.rating) return 0.0;
+    let ratings = Object.values(product.rating);
+    let sumOfRatings = ratings.reduce((a, b) => +a + +b);
+    return (sumOfRatings / ratings.length).toFixed(1);
   };
 
   const countUsersForRating = (rating) => {
-    if (!product.review) return 0;
-    let reviews = Object.values(product.review);
-    return reviews.filter((x) => x == rating).length; // in js, 4 == '4'
+    if (!product.rating) return 0;
+    let ratings = Object.values(product?.rating);
+    return ratings.filter((x) => x == rating).length; // in js, 4 == '4'
   };
 
   return (
@@ -78,7 +67,7 @@ const ProductDetail = () => {
                 {product.ingredients}
                 <br />
                 <br />
-                <h6>Overall Review: {calculateOverallReview()}</h6>
+                <h6>Overall Review: {calculateOverallRating()}</h6>
                 {currentUser && (
                   <SingleInputForm
                     type="number"

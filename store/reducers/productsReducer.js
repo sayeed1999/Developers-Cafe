@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import swal from "sweetalert";
+import AppMsgs from "../../constants/AppMsgs";
 
 const initialState = {
   products: [],
@@ -28,14 +30,20 @@ export const fetchProductById = createAsyncThunk(
 
 export const giveProductReview = createAsyncThunk(
   "products/updateOne",
-  async (id, product, yourReview) => {
-    if (!product.review) product.review = {};
-    product.review[currentUser.uid] = yourReview;
-    const response = await axios.post(
-      `${process.env.NEXT_APP_API_URL}/cafe/products/${id}`,
+  async (payload, { getState }) => {
+    const currentUser = getState().auth.currentUser;
+    let product = { ...payload.product };
+
+    // if (!product.rating) product.rating = {};
+    // const yourRating = +payload.yourRating;
+    // product.rating[currentUser.userid] = yourRating;
+    // console.log(product);
+
+    const response = await axios.put(
+      `${process.env.NEXT_APP_API_URL}/cafe/products/${product._id}`,
       product
     );
-    return response.data;
+    return product;
   }
 );
 
@@ -63,6 +71,13 @@ const productsSlice = createSlice({
               break;
             case fetchProductById:
               state.product = action.payload;
+              break;
+            case giveProductReview:
+              state.product = action.payload;
+              swal({
+                text: AppMsgs.ReviewPlaced,
+                icon: "success",
+              });
               break;
           }
         })

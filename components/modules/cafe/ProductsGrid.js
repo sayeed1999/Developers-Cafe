@@ -11,7 +11,7 @@ const ProductsGrid = ({ products }) => {
             <Product
               product={entry[1]}
               render={(child) => (
-                <ProductWrapper productId={entry[0]}>{child}</ProductWrapper>
+                <ProductWrapper productId={entry[1]._id}>{child}</ProductWrapper>
               )}
             />
             {/* <ProductWrapper productId={entry[0]}>
