@@ -18,7 +18,7 @@ const Post = ({ post }) => {
       <CardContent>
         <div className="d-flex justify-content-between align-items-center">
           <Typography variant="overline" color="text.secondary" gutterBottom>
-            {post.username}
+            {post.username ?? "Anonymous user"}
           </Typography>
           <Typography variant="subtitle2" color="text.secondary">
             {post.createdAt}
@@ -27,12 +27,8 @@ const Post = ({ post }) => {
         <Typography variant="body1">{post.body}</Typography>
         <div className="mt-1 d-flex align-items-end">
           <Typography variant="subtitle2">
-            <IconButton
-              onClick={() =>
-                dispatch(tapHeart({ post, userid: currentUser.userid }))
-              }
-            >
-              {post?.likes.includes(currentUser?.userid) ? (
+            <IconButton onClick={() => dispatch(tapHeart(post))}>
+              {post?.likes?.includes(currentUser?.userid) ? (
                 <FavoriteIcon style={{ color: "brown" }} />
               ) : (
                 <FavoriteBorderOutlinedIcon style={{ color: "brown" }} />
@@ -40,9 +36,9 @@ const Post = ({ post }) => {
             </IconButton>
           </Typography>
           <Typography variant="subtitle2">
-            {post.likes.includes(currentUser?.userid)
-              ? `You and ${post.likes.length - 1} others`
-              : `${post.likes.length} others`}
+            {post?.likes?.includes(currentUser?.userid)
+              ? `You and ${post?.likes?.length - 1} others`
+              : `${post?.likes?.length} others`}
           </Typography>
         </div>
 

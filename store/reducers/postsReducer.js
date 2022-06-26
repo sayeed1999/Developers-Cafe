@@ -26,7 +26,17 @@ export const fetchPostById = createAsyncThunk(
 
 export const createPost = createAsyncThunk(
   "posts/createOne",
-  async (newPost) => {
+  async (postBody, { getState }) => {
+    const currentUser = getState().auth.currentUser;
+
+    let newPost = {};
+    newPost.body = postBody;
+    newPost.likes = [];
+    newPost.comments = [];
+    newPost.userid = currentUser.userid;
+    newPost.username = currentUser.username;
+    newPost.createdAt = new Date();
+
     const response = await axios.post(
       `${process.env.NEXT_APP_API_URL}/newsfeed/posts`,
       newPost
@@ -37,13 +47,14 @@ export const createPost = createAsyncThunk(
 
 export const tapHeart = createAsyncThunk(
   "posts/updateOne",
-  async (payload, { _getState }) => {
-    const post = payload.post;
-    const userid = payload.userid;
-    if (!post.likes) post["likes"] = [];
+  async (post, { getState }) => {
+    const currentUser = getState().auth.currentUser;
+    const userid = currentUser.userid;
+
+    if (!post.likes) post.likes = [];
 
     if (post.likes.includes(userid)) {
-      post.likes = post.likes.filter((x) => x !== userid);
+      post = { ...post, likes: post.likes.filter((x) => x !== userid) };
     } else {
       post = { ...post, likes: [...post.likes, userid] };
     }
@@ -52,7 +63,7 @@ export const tapHeart = createAsyncThunk(
       `${process.env.NEXT_APP_API_URL}/newsfeed/posts/${post._id}`,
       post
     );
-    return response.data;
+    return post;
   }
 );
 
@@ -70,7 +81,21 @@ const postsSlice = createSlice({
         })
         .addCase(m.fulfilled, (state, action) => {
           state.status = "succeeded";
-          state.posts = action.payload;
+          switch (m) {
+            case fetchPosts:
+              state.posts = action.payload;
+              break;
+            case createPost:
+              state.posts.push(action.payload[0]);
+              break;
+            case tapHeart:
+              const post = action.payload;
+              const index = state.posts.findIndex((x) => x._id === post._id);
+              state.posts[index] = post;
+              break;
+            default:
+              break;
+          }
         })
         .addCase(m.rejected, (state, action) => {
           state.status = "failed";

@@ -27,19 +27,10 @@ const ChitChat = () => {
   }, [posts]);
 
   const createNewPost = () => {
-    if (!postBody) {
+    if (!postBody.trim()) {
       return swal("Info", "Cannot post an empty post", "Info");
     }
-
-    dispatch(
-      createPost({
-        body: postBody,
-        createdAt: new Date().toDateString(),
-        userid: currentUser.userid,
-        username: currentUser.userame,
-        comments: [],
-      })
-    );
+    dispatch(createPost(postBody));
   };
 
   return (
