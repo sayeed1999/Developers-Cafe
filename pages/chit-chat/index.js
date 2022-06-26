@@ -21,6 +21,8 @@ const ChitChat = () => {
   useEffect(() => {
     if (postsStatus === "idle") {
       dispatch(fetchPosts());
+    } else if (postsStatus === "succeeded") {
+      setPostBody(() => "");
     }
   }, [postsStatus, dispatch]);
 
