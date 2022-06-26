@@ -1,69 +1,63 @@
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import {
-  Card,
-  CardContent,
-  IconButton,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { Card, CardContent, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { tapHeart } from "../../../store/reducers/postsReducer";
 import Comment from "./Comment";
 
-const Post = ({ post, postId }) => {
+const Post = ({ post }) => {
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const [hideComments, setHideComments] = useState(true);
-  const [state, setState] = useState(post);
   const dispatch = useDispatch();
 
   return (
-    <Card
-      sx={{ minWidth: 275 }}
-      style={{
-        margin: "8px 0",
-      }}
-      elevation="0"
-    >
+    <Card sx={{ minWidth: 275 }} className="my-1" elevation={0}>
       <CardContent>
         <div className="d-flex justify-content-between align-items-center">
           <Typography variant="overline" color="text.secondary" gutterBottom>
-            {state.username}
+            {post.username}
           </Typography>
           <Typography variant="subtitle2" color="text.secondary">
-            {state.createdAt}
+            {post.createdAt}
           </Typography>
         </div>
-        <Typography variant="body1">{state.body}</Typography>
-        <Typography variant="subtitle2">
-          {state.likes ?? 0}{" "}
-          <Tooltip title="Tap to increase Heart">
+        <Typography variant="body1">{post.body}</Typography>
+        <div className="mt-1 d-flex align-items-end">
+          <Typography variant="subtitle2">
             <IconButton
-              onClick={() => {
-                dispatch(tapHeart(postId, post));
-              }}
+              onClick={() =>
+                dispatch(tapHeart({ post, userid: currentUser.userid }))
+              }
             >
-              <FavoriteIcon style={{ color: "darkred" }} />
+              {post?.likes.includes(currentUser?.userid) ? (
+                <FavoriteIcon style={{ color: "brown" }} />
+              ) : (
+                <FavoriteBorderOutlinedIcon style={{ color: "brown" }} />
+              )}
             </IconButton>
-          </Tooltip>
-        </Typography>
+          </Typography>
+          <Typography variant="subtitle2">
+            {post.likes.includes(currentUser?.userid)
+              ? `You and ${post.likes.length - 1} others`
+              : `${post.likes.length} others`}
+          </Typography>
+        </div>
 
         {/* Comments rendering */}
-
         <b>Comments</b>
         <IconButton onClick={() => setHideComments((prev) => !prev)}>
-          {/* {hideComments ? <ExpandMoreIcon /> : <ExpandLessIcon />} */}
-          {hideComments && <ExpandMoreIcon />}
-          {!hideComments && <ExpandLessIcon />}
+          {hideComments ? <ExpandMoreIcon /> : <ExpandLessIcon />}
         </IconButton>
         {!hideComments && (
           <div className="row">
             <div className="col-1"></div>
             <div className="col-11">
               {/* Object.entries() returns [key, value] */}
-              {state.comments && state.comments.length > 0 ? (
-                Object.entries(state.comments).map((entry) => (
+              {post.comments && post.comments.length > 0 ? (
+                Object.entries(post.comments).map((entry) => (
                   <Comment comment={entry[1]} key={entry[0]} />
                 ))
               ) : (

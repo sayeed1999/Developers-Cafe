@@ -37,11 +37,19 @@ export const createPost = createAsyncThunk(
 
 export const tapHeart = createAsyncThunk(
   "posts/updateOne",
-  async (postId, post) => {
-    if (!post.likes) post["likes"] = 0;
-    post["likes"]++;
+  async (payload, { _getState }) => {
+    const post = payload.post;
+    const userid = payload.userid;
+    if (!post.likes) post["likes"] = [];
+
+    if (post.likes.includes(userid)) {
+      post.likes = post.likes.filter((x) => x !== userid);
+    } else {
+      post = { ...post, likes: [...post.likes, userid] };
+    }
+
     const response = await axios.put(
-      `${process.env.NEXT_APP_DATABASE_URL}/newsfeed/posts/${postId}`,
+      `${process.env.NEXT_APP_API_URL}/newsfeed/posts/${post._id}`,
       post
     );
     return response.data;
@@ -62,7 +70,6 @@ const postsSlice = createSlice({
         })
         .addCase(m.fulfilled, (state, action) => {
           state.status = "succeeded";
-          console.log(action.payload);
           state.posts = action.payload;
         })
         .addCase(m.rejected, (state, action) => {

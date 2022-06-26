@@ -57,7 +57,7 @@ const ChitChat = () => {
       {postsToDisplay &&
         Object.entries(postsToDisplay).map((entry) => (
           <div className="col-md-12" key={entry[0]}>
-            <Post postId={entry[0]} post={entry[1]} />
+            <Post post={entry[1]} />
           </div>
         ))}
     </div>
