@@ -2,7 +2,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { Provider } from "react-redux";
 import swal from "sweetalert";
 import Layout from "../components/Layout";
@@ -41,23 +41,26 @@ function MyApp({ Component, pageProps }) {
         });
       }
     );
+  }, []);
 
+  useLayoutEffect(() => {
     // event listener to listen for window scroll events & keep track of current (scrollX, scrollY) position.
     addEventListener(
       "scroll",
       () => {
-        sessionStorage.setItem(window.location.pathname, scrollY);
-        // sessionStorage.setItem(router.asPath, scrollY);
+        if (scrollY > 0) {
+          sessionStorage.setItem(window.location.pathname, scrollY);
+        }
       },
       true
     );
-  }, []);
+  });
 
   // callback function for route changes so that we set previous (scrollX, scrollY) position.
-  useEffect(() => {
-    const posY = sessionStorage.getItem(router.asPath) ?? 0;
-    window.scroll(0, posY);
-  }, [router.asPath]);
+  // useLayoutEffect(() => {
+  //   const posY = sessionStorage.getItem(router.asPath) ?? 0;
+  //   window.scroll(0, posY);
+  // });
 
   return (
     <React.Fragment>

@@ -1,6 +1,16 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getCurrentUser } from "../store/reducers/authReducer";
 import AppDrawer from "./AppDrawer";
 
 const Layout = (props) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) dispatch(getCurrentUser(token));
+  }, []);
+
   return (
     <div>
       <AppDrawer />

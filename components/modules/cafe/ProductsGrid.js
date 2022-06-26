@@ -1,4 +1,3 @@
-import React from "react";
 import Product from "./Product";
 import ProductWrapper from "./ProductWrapper";
 
@@ -9,15 +8,15 @@ const ProductsGrid = ({ products }) => {
         Object.entries(products).map((entry) => (
           <div className="col-md-6" key={entry[0]}>
             {/* Render props pattern used to display products */}
-            {/* <Product
+            <Product
               product={entry[1]}
               render={(child) => (
                 <ProductWrapper productId={entry[0]}>{child}</ProductWrapper>
               )}
-            /> */}
-            <ProductWrapper productId={entry[0]}>
+            />
+            {/* <ProductWrapper productId={entry[0]}>
               <Product product={entry[1]} />
-            </ProductWrapper>
+            </ProductWrapper> */}
           </div>
         ))}
     </div>

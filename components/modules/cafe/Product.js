@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../../../styles/Product.module.css";
 
 /// 'Render-props pattern' used.
@@ -17,12 +16,12 @@ const getProductComponent = (product) => {
           <img
             alt=""
             src={product.img}
-            className="img-fluid"
-            style={{ height: "250px" }}
+            className="img-fluid d-block"
+            style={{ objectFit: "cover", height: "250px", width: "100%" }}
           />
           <p className={styles.productName}>{product.name}</p>
-          <div className="d-flex justify-content-between">
-            <div> {product.price} </div>
+          <div className={styles.priceStock}>
+            <div> ${product.price} </div>
             <div> {product.stocked ? "In Stock" : "Out Of Stock"} </div>
           </div>
         </div>

@@ -1,15 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../../store/reducers/productsReducer";
+import {
+  fetchProducts,
+  searchTextChange,
+} from "../../../store/reducers/productsReducer";
 import SearchBar from "../../shared/SearchBar";
 import ProductsGrid from "./ProductsGrid";
 
 const FilterableProducts = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
+  const searchText = useSelector((state) => state.products.searchText);
   const productsStatus = useSelector((state) => state.products.status);
-  const [searchText, setSearchText] = useState("");
   const [productsToDisplay, setProductsToDisplay] = useState([]);
+
+  useLayoutEffect(() => {
+    const posY = sessionStorage.getItem(window.location.pathname) ?? 0;
+    scroll(0, posY);
+  });
 
   useEffect(() => {
     if (productsStatus === "unloaded") {
@@ -30,7 +38,7 @@ const FilterableProducts = () => {
 
   return (
     <div>
-      <SearchBar state={searchText} setState={setSearchText} />
+      <SearchBar searchText={searchText} searchTextChange={searchTextChange} />
       <ProductsGrid products={productsToDisplay} />
     </div>
   );

@@ -6,10 +6,13 @@ const initialState = {
   product: null,
   status: "unloaded",
   error: null,
+  searchText: "",
 };
 
 export const fetchProducts = createAsyncThunk("products/getAll", async () => {
-  const response = await axios.get(`${process.env.NEXT_APP_API_URL}/products`);
+  const response = await axios.get(
+    `${process.env.NEXT_APP_API_URL}/cafe/products`
+  );
   return response.data;
 });
 
@@ -17,7 +20,7 @@ export const fetchProductById = createAsyncThunk(
   "products/getOne",
   async (id) => {
     const response = await axios.get(
-      `${process.env.NEXT_APP_API_URL}/products/${id}`
+      `${process.env.NEXT_APP_API_URL}/cafe/products/${id}`
     );
     return response.data;
   }
@@ -29,7 +32,7 @@ export const giveProductReview = createAsyncThunk(
     if (!product.review) product.review = {};
     product.review[currentUser.uid] = yourReview;
     const response = await axios.post(
-      `${process.env.NEXT_APP_API_URL}/products/${id}`,
+      `${process.env.NEXT_APP_API_URL}/cafe/products/${id}`,
       product
     );
     return response.data;
@@ -41,7 +44,11 @@ const methods = [fetchProducts, fetchProductById, giveProductReview];
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    searchTextChange(state, action) {
+      state.searchText = action.payload;
+    },
+  },
   extraReducers(builder) {
     methods.forEach((m) => {
       builder
@@ -67,4 +74,5 @@ const productsSlice = createSlice({
   },
 });
 
+export const { searchTextChange } = productsSlice.actions;
 export default productsSlice.reducer;

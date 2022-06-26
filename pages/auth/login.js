@@ -24,19 +24,15 @@ const Login = () => {
 
   useEffect(() => {
     if (authStatus === "succeeded") {
+      // swal is firing on app reload due to getting auth valid token
       swal({
         title: "Success",
         text: AppMsgs.LoggedIn,
         icon: "success",
       });
       push(AppRoutes.ChitChat);
-    } else if (authStatus === "failed") {
-      swal({
-        title: "Error",
-        text: error,
-        icon: "error",
-      });
     }
+
     dispatch(resetStatus());
   }, [authStatus]);
 

@@ -34,7 +34,20 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   return null;
 });
 
-const methods = [signup, login, logout];
+export const getCurrentUser = createAsyncThunk(
+  "auth/currentUser",
+  async (token) => {
+    const response = await axios.post(
+      `${process.env.NEXT_APP_API_URL}/auth/get-current-user`,
+      {
+        token: token,
+      }
+    );
+    return response.data;
+  }
+);
+
+const methods = [signup, login, logout, getCurrentUser];
 
 const authSlice = createSlice({
   name: "auth",
@@ -61,9 +74,15 @@ const authSlice = createSlice({
               state.currentUser = null;
               localStorage.removeItem("token");
               break;
+            case getCurrentUser:
+              state.currentUser = action.payload.user;
+              break;
             default:
               break;
           }
+        })
+        .addCase(m.rejected, (state, action) => {
+          state.status = "idle";
         });
     });
   },
