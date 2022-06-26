@@ -1,6 +1,7 @@
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import swal from "sweetalert";
@@ -10,7 +11,10 @@ import store from "../store";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
   useEffect(() => {
+    // axios interceptor to intercept every axios request.
     axios.interceptors.request.use((req) => {
       req.headers = {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -24,6 +28,7 @@ function MyApp({ Component, pageProps }) {
       return req;
     });
 
+    // axios interceptor to intercept every axios response.
     axios.interceptors.response.use(
       (res) => {
         return res;
@@ -36,7 +41,23 @@ function MyApp({ Component, pageProps }) {
         });
       }
     );
+
+    // event listener to listen for window scroll events & keep track of current (scrollX, scrollY) position.
+    addEventListener(
+      "scroll",
+      () => {
+        sessionStorage.setItem(window.location.pathname, scrollY);
+        // sessionStorage.setItem(router.asPath, scrollY);
+      },
+      true
+    );
   }, []);
+
+  // callback function for route changes so that we set previous (scrollX, scrollY) position.
+  useEffect(() => {
+    const posY = sessionStorage.getItem(router.asPath) ?? 0;
+    window.scroll(0, posY);
+  }, [router.asPath]);
 
   return (
     <React.Fragment>
