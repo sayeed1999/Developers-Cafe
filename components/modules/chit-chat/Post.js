@@ -66,12 +66,14 @@ const Post = ({ post }) => {
             <div className="row">
               <div className="col-1"></div>
               <div className="col-11">
-                <SingleInputForm
-                  type="textarea"
-                  state={commentBody}
-                  setState={setCommentBody}
-                  onSubmit={createNewComment}
-                />
+                {currentUser && (
+                  <SingleInputForm
+                    type="textarea"
+                    state={commentBody}
+                    setState={setCommentBody}
+                    onSubmit={createNewComment}
+                  />
+                )}
 
                 {/* Object.entries() returns [key, value] */}
                 {post.comments && post.comments.length > 0 ? (

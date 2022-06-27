@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import swal from "sweetalert";
 
 const initialState = {
   posts: [],
@@ -28,6 +29,12 @@ export const createPost = createAsyncThunk(
   "posts/createOne",
   async (postBody, { getState }) => {
     const currentUser = getState().auth.currentUser;
+    if (!currentUser) {
+      return swal({
+        text: "Please login first!",
+        icon: "info",
+      });
+    }
 
     let newPost = {};
     newPost.body = postBody;
@@ -49,6 +56,12 @@ export const commentOnPost = createAsyncThunk(
   "comments/createOne",
   async (payload, { getState }) => {
     const currentUser = getState().auth.currentUser;
+    if (!currentUser) {
+      return swal({
+        text: "Please login first!",
+        icon: "info",
+      });
+    }
     const postId = payload.postId;
 
     let comment = {
@@ -70,6 +83,12 @@ export const tapHeart = createAsyncThunk(
   "posts/updateOne",
   async (post, { getState }) => {
     const currentUser = getState().auth.currentUser;
+    if (!currentUser) {
+      return swal({
+        text: "Please login first!",
+        icon: "info",
+      });
+    }
     const userid = currentUser.userid;
 
     if (!post.likes) post.likes = [];
