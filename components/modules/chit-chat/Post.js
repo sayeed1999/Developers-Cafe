@@ -3,15 +3,29 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Card, CardContent, IconButton, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { tapHeart } from "../../../store/reducers/postsReducer";
+import swal from "sweetalert";
+import SingleInputForm from "../../../components/shared/SingleInputForm";
+import { commentOnPost, tapHeart } from "../../../store/reducers/postsReducer";
 import Comment from "./Comment";
 
 const Post = ({ post }) => {
   const currentUser = useSelector((state) => state.auth.currentUser);
   const [hideComments, setHideComments] = useState(true);
+  const [commentBody, setCommentBody] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCommentBody("");
+  }, [post]);
+
+  const createNewComment = () => {
+    if (!commentBody.trim()) {
+      return swal("Info", "Cannot comment and empty comment", "info");
+    }
+    dispatch(commentOnPost({ commentBody, postId: post._id }));
+  };
 
   return (
     <Card sx={{ minWidth: 275 }} className="my-1" elevation={0}>
@@ -52,6 +66,13 @@ const Post = ({ post }) => {
             <div className="row">
               <div className="col-1"></div>
               <div className="col-11">
+                <SingleInputForm
+                  type="textarea"
+                  state={commentBody}
+                  setState={setCommentBody}
+                  onSubmit={createNewComment}
+                />
+
                 {/* Object.entries() returns [key, value] */}
                 {post.comments && post.comments.length > 0 ? (
                   Object.entries(post.comments).map((entry) => (

@@ -3,7 +3,7 @@ const SingleInputForm = ({
   setState,
   type = "text",
   onSubmit,
-  buttonName = "Press",
+  buttonName = "Send",
   placeholder = "Type here..",
 }) => {
   return (
@@ -12,7 +12,7 @@ const SingleInputForm = ({
         <textarea
           placeholder={placeholder}
           value={state}
-          onChange={() => setState(event.target.value)}
+          onChange={(event) => setState(event.target.value)}
           className="flex-grow-1 p-1"
         ></textarea>
       ) : (
@@ -20,7 +20,7 @@ const SingleInputForm = ({
           type={type}
           placeholder={placeholder}
           value={state}
-          onChange={() => setState(event.target.value)}
+          onChange={(event) => setState(event.target.value)}
           className="flex-grow-1 p-1"
         />
       )}

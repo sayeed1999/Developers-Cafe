@@ -45,6 +45,27 @@ export const createPost = createAsyncThunk(
   }
 );
 
+export const commentOnPost = createAsyncThunk(
+  "comments/createOne",
+  async (payload, { getState }) => {
+    const currentUser = getState().auth.currentUser;
+    const postId = payload.postId;
+
+    let comment = {
+      body: payload.commentBody,
+      userid: currentUser.userid,
+      username: currentUser.username,
+      createdAt: new Date(),
+    };
+
+    const response = await axios.post(
+      `${process.env.NEXT_APP_API_URL}/newsfeed/posts/${postId}/comments`,
+      comment
+    );
+    return response.data;
+  }
+);
+
 export const tapHeart = createAsyncThunk(
   "posts/updateOne",
   async (post, { getState }) => {
@@ -67,7 +88,13 @@ export const tapHeart = createAsyncThunk(
   }
 );
 
-const methods = [fetchPosts, fetchPostById, createPost, tapHeart];
+const methods = [
+  fetchPosts,
+  fetchPostById,
+  createPost,
+  tapHeart,
+  commentOnPost,
+];
 
 const postsSlice = createSlice({
   name: "posts",
@@ -89,6 +116,7 @@ const postsSlice = createSlice({
               state.posts.push(action.payload[0]);
               break;
             case tapHeart:
+            case commentOnPost:
               const post = action.payload;
               const index = state.posts.findIndex((x) => x._id === post._id);
               state.posts[index] = post;
