@@ -75,6 +75,7 @@ const authSlice = createSlice({
               localStorage.removeItem("token");
               break;
             case getCurrentUser:
+              state.status = "idle";
               state.currentUser = action.payload.user;
               break;
             default:
