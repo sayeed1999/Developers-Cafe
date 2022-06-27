@@ -1,7 +1,13 @@
-import ChitChat from "./chit-chat/index";
+import { useRouter } from 'next/router';
+import { useEffect } from "react";
+import AppRoutes from "../constants/AppRoutes";
 
 const Home = () => {
-  return <ChitChat />;
+  const router = useRouter();
+  useEffect(() => {
+    router.push(AppRoutes.ChitChat);
+  });
+  return <div>This is the homepage...</div>;
 };
 
 export default Home;

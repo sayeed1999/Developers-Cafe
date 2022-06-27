@@ -28,7 +28,7 @@ const Post = ({ post }) => {
   };
 
   return (
-    <Card sx={{ minWidth: 275 }} className="my-1" elevation={0}>
+    <Card sx={{ minWidth: 275 }} className="my-1" elevation={1}>
       {post && (
         <CardContent>
           <div className="d-flex justify-content-between align-items-center">
@@ -36,30 +36,41 @@ const Post = ({ post }) => {
               {post.username ?? "Anonymous user"}
             </Typography>
             <Typography variant="subtitle2" color="text.secondary">
-              {post.createdAt}
+              {post.createdAt?.substring(0, 10)}
             </Typography>
           </div>
           <Typography variant="body1">{post.body}</Typography>
-          <div className="mt-1 d-flex align-items-end">
+          <div className="mt-1 d-flex align-items-center">
             <Typography variant="subtitle2">
-              <IconButton onClick={() => dispatch(tapHeart(post))}>
+              <IconButton size="small" onClick={() => dispatch(tapHeart(post))}>
                 {post?.likes?.includes(currentUser?.userid) ? (
-                  <FavoriteIcon style={{ color: "brown" }} />
+                  <FavoriteIcon style={{ fontSize: "6px", color: "brown" }} />
                 ) : (
-                  <FavoriteBorderOutlinedIcon style={{ color: "brown" }} />
+                  <FavoriteBorderOutlinedIcon
+                    style={{ fontSize: "22px", color: "brown" }}
+                  />
                 )}
               </IconButton>
             </Typography>
-            <Typography variant="subtitle2">
-              {post?.likes?.includes(currentUser?.userid)
-                ? `You and ${post?.likes?.length - 1} others`
-                : `${post?.likes?.length} others`}
+            <Typography variant="inherit" color="text.secondary">
+              <small>
+                {post?.likes?.includes(currentUser?.userid)
+                  ? `You and ${post?.likes?.length - 1} others`
+                  : `${post?.likes?.length} others`}
+              </small>
             </Typography>
           </div>
 
           {/* Comments rendering */}
-          <b>Comments</b>
-          <IconButton onClick={() => setHideComments((prev) => !prev)}>
+          <hr style={{ margin: "2px 0" }} />
+          <strong>
+            {" "}
+            <small>Comments</small>{" "}
+          </strong>
+          <IconButton
+            size="small"
+            onClick={() => setHideComments((prev) => !prev)}
+          >
             {hideComments ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           </IconButton>
           {!hideComments && (
