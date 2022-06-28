@@ -7,7 +7,7 @@ import Product from "../../../components/modules/cafe/Product";
 import SingleInputForm from "../../../components/shared/SingleInputForm";
 import {
   fetchProductById,
-  giveProductReview,
+  giveProductRating,
 } from "../../../store/reducers/productsReducer";
 
 const ProductDetail = () => {
@@ -38,14 +38,21 @@ const ProductDetail = () => {
         icon: "warning",
       });
     }
-    dispatch(giveProductReview({ product, yourRating }));
+    dispatch(giveProductRating({ productId: product._id, yourRating }));
   };
 
   const calculateOverallRating = () => {
-    if (!product.rating) return 0.0;
-    let ratings = Object.values(product.rating);
-    let sumOfRatings = ratings.reduce((a, b) => +a + +b);
-    return (sumOfRatings / ratings.length).toFixed(1);
+    if (!product.ratings) return 0.0;
+    if (product.ratings.length === 0) return 0.0;
+
+    let sum = 0,
+      count = 0;
+    product.ratings.forEach((r) => {
+      sum += r.star;
+      count++;
+    });
+
+    return (sum / count).toFixed(1);
   };
 
   const countUsersForRating = (rating) => {

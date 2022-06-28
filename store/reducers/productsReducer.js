@@ -28,26 +28,23 @@ export const fetchProductById = createAsyncThunk(
   }
 );
 
-export const giveProductReview = createAsyncThunk(
-  "products/updateOne",
+export const giveProductRating = createAsyncThunk(
+  "products/rating/updateOne",
   async (payload, { getState }) => {
-    const currentUser = getState().auth.currentUser;
-    let product = { ...payload.product };
+    let productId = payload.productId;
+    let yourRating = +payload.yourRating;
 
-    // if (!product.rating) product.rating = {};
-    // const yourRating = +payload.yourRating;
-    // product.rating[currentUser.userid] = yourRating;
-    // console.log(product);
-
-    const response = await axios.put(
-      `${process.env.NEXT_APP_API_URL}/cafe/products/${product._id}`,
-      product
+    const response = await axios.post(
+      `${process.env.NEXT_APP_API_URL}/cafe/products/${productId}/rating`,
+      {
+        star: yourRating,
+      }
     );
-    return product;
+    return response.data;
   }
 );
 
-const methods = [fetchProducts, fetchProductById, giveProductReview];
+const methods = [fetchProducts, fetchProductById, giveProductRating];
 
 const productsSlice = createSlice({
   name: "products",
@@ -72,7 +69,7 @@ const productsSlice = createSlice({
             case fetchProductById:
               state.product = action.payload.data;
               break;
-            case giveProductReview:
+            case giveProductRating:
               state.product = action.payload.data;
               swal({
                 text: AppMsgs.ReviewPlaced,
