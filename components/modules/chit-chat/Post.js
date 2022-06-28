@@ -44,7 +44,7 @@ const Post = ({ post }) => {
             <Typography variant="subtitle2">
               <IconButton size="small" onClick={() => dispatch(tapHeart(post))}>
                 {post?.likes?.includes(currentUser?.userid) ? (
-                  <FavoriteIcon style={{ fontSize: "6px", color: "brown" }} />
+                  <FavoriteIcon style={{ fontSize: "22px", color: "brown" }} />
                 ) : (
                   <FavoriteBorderOutlinedIcon
                     style={{ fontSize: "22px", color: "brown" }}
