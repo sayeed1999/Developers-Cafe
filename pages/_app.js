@@ -28,11 +28,18 @@ axios.interceptors.response.use(
     return res;
   },
   (err) => {
-    const error = err.response.data.error;
-    swal({
-      text: `"${error.message ?? "Internet connection error"}"`,
-      icon: "error",
-    });
+    if (err.response.status === 0) {
+      swal({
+        text: "Please check your internet connection!",
+        icon: "error",
+      });
+    } else {
+      const error = err.response.data.error;
+      swal({
+        text: error.message,
+        icon: "error",
+      });
+    }
   }
 );
 
