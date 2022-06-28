@@ -48,7 +48,7 @@ export const createPost = createAsyncThunk(
       `${process.env.NEXT_APP_API_URL}/newsfeed/posts`,
       newPost
     );
-    return response.data[0];
+    return response.data;
   }
 );
 
@@ -135,7 +135,7 @@ const postsSlice = createSlice({
               state.posts = action.payload.data;
               break;
             case createPost:
-              state.posts.push(action.payload.data);
+              state.posts.push(action.payload.data[0]);
               break;
             case tapHeart:
             case commentOnPost:
