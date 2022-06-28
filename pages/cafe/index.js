@@ -1,8 +1,7 @@
-import { Home } from "@mui/icons-material";
+import FilterableProducts from "../../components/modules/cafe//FilterableProducts";
 
 const Cafe = () => {
-  return <Home />;
-  // return <FilterableProducts />;
+  return <FilterableProducts />;
 };
 
 export default Cafe;

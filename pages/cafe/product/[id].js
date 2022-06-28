@@ -23,8 +23,13 @@ const ProductDetail = () => {
   }, []);
 
   useEffect(() => {
-    if (product?.rating && currentUser) {
-      setYourRating(() => +product.rating[currentUser.userid]);
+    if (product?.ratings && currentUser) {
+      const rating = product.ratings.find(
+        (x) => x.userid === currentUser.userid
+      );
+      if (rating) {
+        setYourRating(() => rating.star);
+      }
     }
   }, [product]);
 
@@ -42,8 +47,7 @@ const ProductDetail = () => {
   };
 
   const calculateOverallRating = () => {
-    if (!product.ratings) return 0.0;
-    if (product.ratings.length === 0) return 0.0;
+    if (!product?.ratings?.length === 0) return 0.0;
 
     let sum = 0,
       count = 0;
@@ -56,9 +60,7 @@ const ProductDetail = () => {
   };
 
   const countUsersForRating = (rating) => {
-    if (!product.rating) return 0;
-    let ratings = Object.values(product?.rating);
-    return ratings.filter((x) => x == rating).length; // in js, 4 == '4'
+    return product.ratings.filter((x) => x.star === rating).length; // in js, 4 == '4'
   };
 
   return (

@@ -43,14 +43,14 @@ const AppDrawer = ({ children }) => {
           </ListItemButton>
         </ListItem>
 
-        {/* <ListItem disablePadding>
+        <ListItem disablePadding>
           <ListItemButton>
             <ListItemText
               primary="Cafe"
               onClick={() => router.push(AppRoutes.Cafe)}
             />
           </ListItemButton>
-        </ListItem> */}
+        </ListItem>
       </List>
     </Box>
   );
