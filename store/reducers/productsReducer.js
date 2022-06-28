@@ -67,13 +67,13 @@ const productsSlice = createSlice({
           state.status = "succeeded";
           switch (m) {
             case fetchProducts:
-              state.products = action.payload;
+              state.products = action.payload.data;
               break;
             case fetchProductById:
-              state.product = action.payload;
+              state.product = action.payload.data;
               break;
             case giveProductReview:
-              state.product = action.payload;
+              state.product = action.payload.data;
               swal({
                 text: AppMsgs.ReviewPlaced,
                 icon: "success",

@@ -48,7 +48,7 @@ export const createPost = createAsyncThunk(
       `${process.env.NEXT_APP_API_URL}/newsfeed/posts`,
       newPost
     );
-    return response.data;
+    return response.data[0];
   }
 );
 
@@ -103,7 +103,10 @@ export const tapHeart = createAsyncThunk(
       `${process.env.NEXT_APP_API_URL}/newsfeed/posts/${post._id}`,
       post
     );
-    return post;
+    const payload = {
+      data: post,
+    };
+    return payload;
   }
 );
 
@@ -129,14 +132,14 @@ const postsSlice = createSlice({
           state.status = "succeeded";
           switch (m) {
             case fetchPosts:
-              state.posts = action.payload;
+              state.posts = action.payload.data;
               break;
             case createPost:
-              state.posts.push(action.payload[0]);
+              state.posts.push(action.payload.data);
               break;
             case tapHeart:
             case commentOnPost:
-              const post = action.payload;
+              const post = action.payload.data;
               const index = state.posts.findIndex((x) => x._id === post._id);
               state.posts[index] = post;
               break;
