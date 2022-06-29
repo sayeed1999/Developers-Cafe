@@ -1,6 +1,7 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Card, CardContent, IconButton, Typography } from "@mui/material";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { tapHeart } from "../../../store/reducers/postsReducer";
 import Comments from "./Comments";
@@ -8,6 +9,10 @@ import Comments from "./Comments";
 const Post = ({ post }) => {
   const currentUser = useSelector((state) => state.auth.currentUser);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("post rendered");
+  }, []);
 
   const headerSection = (
     <div className="d-flex justify-content-between align-items-center">
@@ -67,4 +72,7 @@ const Post = ({ post }) => {
   );
 };
 
-export default Post;
+export default React.memo(Post);
+// without React.memo() on Post component,
+// if the newsfeed had 500+ components at once,
+// the new post input form was getting too slow...

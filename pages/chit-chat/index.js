@@ -17,6 +17,11 @@ const ChitChat = () => {
 
   const [postsToDisplay, setPostsToDisplay] = useState({});
   const [postBody, setPostBody] = useState("");
+  const [onSleep, setOnSleep] = useState(false);
+
+  useEffect(() => {
+    console.log("newsfeed rendered");
+  }, []);
 
   useEffect(() => {
     if (postsStatus === "idle") {
@@ -33,7 +38,21 @@ const ChitChat = () => {
   useEffect(() => {
     const posY = sessionStorage.getItem(window.location.pathname) ?? 0;
     scroll(0, posY);
-  });
+
+    addEventListener("scroll", () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        if (!onSleep) {
+          fetchMore();
+          setOnSleep(() => true);
+          // console.log(onSleep);
+        }
+      }
+    });
+  }, []);
+
+  const fetchMore = () => {
+    // console.log("data fetching");
+  };
 
   const createNewPost = () => {
     if (!postBody.trim()) {

@@ -1,7 +1,12 @@
 import { Card, CardContent, Typography } from "@mui/material";
+import React, { useEffect } from "react";
 
 const Comment = (props) => {
   const { comment } = props;
+
+  useEffect(() => {
+    console.log("single comment rendered");
+  }, []);
 
   return (
     <Card
@@ -25,4 +30,5 @@ const Comment = (props) => {
   );
 };
 
-export default Comment;
+// export default Comment;
+export default React.memo(Comment);

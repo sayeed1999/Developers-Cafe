@@ -1,8 +1,9 @@
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { IconButton } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { commentOnPost } from "../../../store/reducers/postsReducer";
 import SingleInputForm from "../../shared/SingleInputForm";
 import Comment from "./Comment";
 
@@ -11,6 +12,10 @@ const Comments = ({ comments, postId }) => {
   const [commentBody, setCommentBody] = useState("");
   const currentUser = useSelector((state) => state.auth.currentUser);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("comments rendered");
+  }, []);
 
   useEffect(() => {
     setCommentBody("");
@@ -71,4 +76,4 @@ const Comments = ({ comments, postId }) => {
   );
 };
 
-export default Comments;
+export default React.memo(Comments);

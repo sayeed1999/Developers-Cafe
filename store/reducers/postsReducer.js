@@ -4,16 +4,22 @@ import swal from "sweetalert";
 
 const initialState = {
   posts: [],
+  size: 5,
+  page: 1,
   status: "idle",
   error: null,
 };
 
-export const fetchPosts = createAsyncThunk("posts/getAll", async () => {
-  const response = await axios.get(
-    `${process.env.NEXT_APP_API_URL}/newsfeed/posts`
-  );
-  return response.data;
-});
+export const fetchPosts = createAsyncThunk(
+  "posts/getAll",
+  async (_payload, { getState }) => {
+    const { size, page } = getState().posts;
+    const response = await axios.get(
+      `${process.env.NEXT_APP_API_URL}/newsfeed/posts?size=${size}&page=${page}`
+    );
+    return response.data;
+  }
+);
 
 export const fetchPostById = createAsyncThunk(
   "posts/getOne",
@@ -135,7 +141,7 @@ const postsSlice = createSlice({
               state.posts = action.payload.data;
               break;
             case createPost:
-              state.posts.push(action.payload.data[0]);
+              state.posts.unshift(action.payload.data[0]);
               break;
             case tapHeart:
             case commentOnPost:
