@@ -42,24 +42,27 @@ const ChitChat = () => {
     dispatch(createPost(postBody));
   };
 
+  const singleInputForm = (
+    <div className="col-md-12 my-2">
+      <SingleInputForm
+        state={postBody}
+        setState={setPostBody}
+        type="textarea"
+        onSubmit={createNewPost}
+      />
+    </div>
+  );
+
+  const postsGrid = Object.entries(postsToDisplay).map((entry) => (
+    <div className="col-md-12" key={entry[0]}>
+      <Post post={entry[1]} />
+    </div>
+  ));
+
   return (
     <div className="row">
-      <div className="col-md-12 my-2">
-        {currentUser && (
-          <SingleInputForm
-            state={postBody}
-            setState={setPostBody}
-            type="textarea"
-            onSubmit={createNewPost}
-          />
-        )}
-      </div>
-      {postsToDisplay &&
-        Object.entries(postsToDisplay).map((entry) => (
-          <div className="col-md-12" key={entry[0]}>
-            <Post post={entry[1]} />
-          </div>
-        ))}
+      {currentUser && singleInputForm}
+      {postsToDisplay && postsGrid}
     </div>
   );
 };
