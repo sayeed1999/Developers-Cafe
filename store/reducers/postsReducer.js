@@ -21,6 +21,19 @@ export const fetchPosts = createAsyncThunk(
   }
 );
 
+export const loadMore = createAsyncThunk(
+  "posts/loadMore",
+  async (_payload, { getState }) => {
+    const { size, page } = getState().posts;
+    const response = await axios.get(
+      `${process.env.NEXT_APP_API_URL}/newsfeed/posts?size=${size}&page=${
+        page + 1
+      }`
+    );
+    return response.data;
+  }
+);
+
 export const fetchPostById = createAsyncThunk(
   "posts/getOne",
   async (postId) => {
@@ -118,6 +131,7 @@ export const tapHeart = createAsyncThunk(
 
 const methods = [
   fetchPosts,
+  loadMore,
   fetchPostById,
   createPost,
   tapHeart,
@@ -139,6 +153,11 @@ const postsSlice = createSlice({
           switch (m) {
             case fetchPosts:
               state.posts = action.payload.data;
+              break;
+            case loadMore:
+              state.page += 1;
+              state.posts = [...state.posts, ...action.payload.data];
+              console.log(action.payload.data);
               break;
             case createPost:
               state.posts.unshift(action.payload.data[0]);

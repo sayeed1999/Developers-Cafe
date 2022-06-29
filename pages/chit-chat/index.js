@@ -1,10 +1,14 @@
 import { useRouter } from "next/router";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Post from "../../components/modules/chit-chat/Post";
 import SingleInputForm from "../../components/shared/SingleInputForm";
-import { createPost, fetchPosts } from "../../store/reducers/postsReducer";
+import {
+  createPost,
+  fetchPosts,
+  loadMore,
+} from "../../store/reducers/postsReducer";
 
 const ChitChat = () => {
   const router = useRouter();
@@ -13,11 +17,13 @@ const ChitChat = () => {
   const posts = useSelector((state) => state.posts.posts);
 
   const postsStatus = useSelector((state) => state.posts.status);
-  const error = useSelector((state) => state.posts.error);
 
   const [postsToDisplay, setPostsToDisplay] = useState({});
   const [postBody, setPostBody] = useState("");
-  const [onSleep, setOnSleep] = useState(false);
+
+  const ref = useRef();
+  let onSleep = true;
+  setTimeout(() => (onSleep = false), 2000); // give him some time!
 
   useEffect(() => {
     if (postsStatus === "idle") {
@@ -35,19 +41,25 @@ const ChitChat = () => {
     const posY = sessionStorage.getItem(window.location.pathname) ?? 0;
     scroll(0, posY);
 
-    addEventListener("scroll", () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        if (!onSleep) {
-          fetchMore();
-          setOnSleep(() => true);
-          // console.log(onSleep);
-        }
-      }
-    });
+    addEventListener("scroll", scrollHandler);
+
+    return () => {
+      removeEventListener("scroll", scrollHandler);
+    };
   });
 
+  const scrollHandler = () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (!onSleep) {
+        fetchMore();
+        onSleep = true;
+        setTimeout(() => (onSleep = false), 5000);
+      }
+    }
+  };
+
   const fetchMore = () => {
-    // console.log("data fetching");
+    dispatch(loadMore());
   };
 
   const createNewPost = () => {
