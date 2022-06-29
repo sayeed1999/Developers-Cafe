@@ -63,7 +63,6 @@ const Post = ({ post }) => {
           </CardContent>
         </Card>
       )}
-      ;
     </>
   );
 };
