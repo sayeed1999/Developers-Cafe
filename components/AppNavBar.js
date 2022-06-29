@@ -5,7 +5,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppMsgs from "../constants/AppMsgs";
 import AppRoutes from "../constants/AppRoutes";
@@ -96,4 +96,4 @@ const AppNavBar = ({ toggleDrawer }) => {
   );
 };
 
-export default AppNavBar;
+export default React.memo(AppNavBar);

@@ -1,7 +1,7 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Card, CardContent, IconButton, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { tapHeart } from "../../../store/reducers/postsReducer";
 import Comments from "./Comments";
@@ -9,10 +9,6 @@ import Comments from "./Comments";
 const Post = ({ post }) => {
   const currentUser = useSelector((state) => state.auth.currentUser);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log("post rendered");
-  }, []);
 
   const headerSection = (
     <div className="d-flex justify-content-between align-items-center">

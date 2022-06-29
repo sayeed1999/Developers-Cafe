@@ -14,10 +14,6 @@ const Comments = ({ comments, postId }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("comments rendered");
-  }, []);
-
-  useEffect(() => {
     setCommentBody("");
   }, [comments]);
 

@@ -1,12 +1,8 @@
 import { Card, CardContent, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 
 const Comment = (props) => {
   const { comment } = props;
-
-  useEffect(() => {
-    console.log("single comment rendered");
-  }, []);
 
   return (
     <Card

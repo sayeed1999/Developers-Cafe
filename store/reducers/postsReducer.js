@@ -4,7 +4,7 @@ import swal from "sweetalert";
 
 const initialState = {
   posts: [],
-  size: 5,
+  size: 10,
   page: 1,
   status: "idle",
   error: null,
