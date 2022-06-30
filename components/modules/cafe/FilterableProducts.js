@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProducts,
@@ -14,10 +14,10 @@ const FilterableProducts = () => {
   const productsStatus = useSelector((state) => state.products.status);
   const [productsToDisplay, setProductsToDisplay] = useState([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const posY = sessionStorage.getItem(window.location.pathname) ?? 0;
     scroll(0, posY);
-  });
+  }); // -> on every render
 
   useEffect(() => {
     if (productsStatus === "unloaded") {

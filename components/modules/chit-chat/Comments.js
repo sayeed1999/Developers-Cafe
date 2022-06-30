@@ -8,6 +8,7 @@ import SingleInputForm from "../../shared/SingleInputForm";
 import Comment from "./Comment";
 
 const Comments = ({ comments, postId }) => {
+  // console.log("comments rendered");
   const [hideComments, setHideComments] = useState(true);
   const [commentBody, setCommentBody] = useState("");
   const currentUser = useSelector((state) => state.auth.currentUser);

@@ -2,6 +2,7 @@ import { Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 
 const Comment = (props) => {
+  // console.log("comment rendered");
   const { comment } = props;
 
   return (

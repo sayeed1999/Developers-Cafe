@@ -2,7 +2,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import swal from "sweetalert";
 import Layout from "../components/Layout";
@@ -46,7 +46,7 @@ axios.interceptors.response.use(
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // event listener to listen for window scroll events & keep track of current (scrollX, scrollY) position.
     addEventListener(
       "scroll",
@@ -57,13 +57,7 @@ function MyApp({ Component, pageProps }) {
       },
       true
     );
-  });
-
-  // callback function for route changes so that we set previous (scrollX, scrollY) position.
-  // useLayoutEffect(() => {
-  //   const posY = sessionStorage.getItem(router.asPath) ?? 0;
-  //   window.scroll(0, posY);
-  // });
+  }, []); // -> [] renders only on first render, while no dependency array runs on every render
 
   return (
     <React.Fragment>

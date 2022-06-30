@@ -7,6 +7,7 @@ import { tapHeart } from "../../../store/reducers/postsReducer";
 import Comments from "./Comments";
 
 const Post = ({ post }) => {
+  // console.log("post rendered");
   const currentUser = useSelector((state) => state.auth.currentUser);
   const dispatch = useDispatch();
 

@@ -23,7 +23,7 @@ const ChitChat = () => {
 
   const ref = useRef();
   let onSleep = true;
-  setTimeout(() => (onSleep = false), 2000); // give him some time!
+  setTimeout(() => (onSleep = false), 500); // give him some time!
 
   useEffect(() => {
     if (postsStatus === "idle") {
@@ -49,11 +49,14 @@ const ChitChat = () => {
   });
 
   const scrollHandler = () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    if (
+      window.innerHeight + window.scrollY + 50 >=
+      document.body.offsetHeight
+    ) {
       if (!onSleep) {
         fetchMore();
         onSleep = true;
-        setTimeout(() => (onSleep = false), 5000);
+        setTimeout(() => (onSleep = false), 2000);
       }
     }
   };
