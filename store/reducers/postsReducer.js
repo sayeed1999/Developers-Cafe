@@ -157,7 +157,6 @@ const postsSlice = createSlice({
             case loadMore:
               state.page += 1;
               state.posts = [...state.posts, ...action.payload.data];
-              console.log(action.payload.data);
               break;
             case createPost:
               state.posts.unshift(action.payload.data[0]);

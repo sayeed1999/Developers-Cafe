@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Post from "../../components/modules/chit-chat/Post";
@@ -37,7 +37,7 @@ const ChitChat = () => {
     setPostsToDisplay(() => posts);
   }, [posts]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const posY = sessionStorage.getItem(window.location.pathname) ?? 0;
     scroll(0, posY);
 
@@ -59,7 +59,7 @@ const ChitChat = () => {
         setTimeout(() => (onSleep = false), 2000);
       }
     }
-  };
+  }; // -> scroll handler not working with [] empty dependency array!
 
   const fetchMore = () => {
     dispatch(loadMore());
