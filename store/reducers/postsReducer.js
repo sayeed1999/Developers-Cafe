@@ -159,11 +159,12 @@ const postsSlice = createSlice({
               state.posts = [...state.posts, ...action.payload.data];
               break;
             case createPost:
+              if (!action.payload.data[0]) break;
               state.posts.unshift(action.payload.data[0]);
               break;
             case tapHeart:
             case commentOnPost:
-              const post = action.payload.data;
+              if (!action.payload.data) break;
               const index = state.posts.findIndex((x) => x._id === post._id);
               state.posts[index] = post;
               break;
