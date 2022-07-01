@@ -6,7 +6,7 @@ import AppMsgs from "../../constants/AppMsgs";
 const initialState = {
   products: [],
   product: null,
-  status: "unloaded",
+  status: "idle",
   error: null,
   searchText: "",
 };

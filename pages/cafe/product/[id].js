@@ -11,6 +11,7 @@ import {
 } from "../../../store/reducers/productsReducer";
 
 const ProductDetail = () => {
+  // console.log("product detail rendered");
   const router = useRouter();
   const { id } = router.query;
   const dispatch = useDispatch();
@@ -45,6 +46,10 @@ const ProductDetail = () => {
     }
     dispatch(giveProductRating({ productId: product._id, yourRating }));
   };
+
+  // useCallback() memoizes a function
+  // useCallback() memoizes a value
+  // should i use these here ??
 
   const calculateOverallRating = () => {
     if (!product?.ratings?.length === 0) return 0.0;

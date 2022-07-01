@@ -4,6 +4,7 @@ import {
   fetchProducts,
   searchTextChange,
 } from "../../../store/reducers/productsReducer";
+import { useScroll } from "../../../utils/hooks/scroll";
 import SearchBar from "../../shared/SearchBar";
 import ProductsGrid from "./ProductsGrid";
 
@@ -14,13 +15,10 @@ const FilterableProducts = () => {
   const productsStatus = useSelector((state) => state.products.status);
   const [productsToDisplay, setProductsToDisplay] = useState([]);
 
-  useEffect(() => {
-    const posY = sessionStorage.getItem(window.location.pathname) ?? 0;
-    scroll(0, posY);
-  }); // -> on every render
+  useScroll(); // hook to scroll to previous scrolled position
 
   useEffect(() => {
-    if (productsStatus === "unloaded") {
+    if (productsStatus === "idle") {
       dispatch(fetchProducts());
     }
     setProductsToDisplay(() => filteredProducts(searchText));

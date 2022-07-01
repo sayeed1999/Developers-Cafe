@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Post from "../../components/modules/chit-chat/Post";
@@ -9,21 +8,18 @@ import {
   fetchPosts,
   loadMore,
 } from "../../store/reducers/postsReducer";
+import { useScroll, useScrollHandler } from "../../utils/hooks/scroll";
 
 const ChitChat = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
   const posts = useSelector((state) => state.posts.posts);
-
+  useScroll();
   const postsStatus = useSelector((state) => state.posts.status);
 
   const [postsToDisplay, setPostsToDisplay] = useState({});
   const [postBody, setPostBody] = useState("");
-
-  const ref = useRef();
-  let onSleep = true;
-  setTimeout(() => (onSleep = false), 500); // give him some time!
 
   useEffect(() => {
     if (postsStatus === "idle") {
@@ -37,33 +33,11 @@ const ChitChat = () => {
     setPostsToDisplay(() => posts);
   }, [posts]);
 
-  useEffect(() => {
-    const posY = sessionStorage.getItem(window.location.pathname) ?? 0;
-    scroll(0, posY);
-
-    addEventListener("scroll", scrollHandler);
-
-    return () => {
-      removeEventListener("scroll", scrollHandler);
-    };
-  });
-
-  const scrollHandler = () => {
-    if (
-      window.innerHeight + window.scrollY + 50 >=
-      document.body.offsetHeight
-    ) {
-      if (!onSleep) {
-        fetchMore();
-        onSleep = true;
-        setTimeout(() => (onSleep = false), 2000);
-      }
-    }
-  }; // -> scroll handler not working with [] empty dependency array!
-
+  // scrollHandler hook used to load more datas when scrolled at the bottom
   const fetchMore = () => {
     dispatch(loadMore());
   };
+  useScrollHandler(fetchMore);
 
   const createNewPost = () => {
     if (!postBody.trim()) {

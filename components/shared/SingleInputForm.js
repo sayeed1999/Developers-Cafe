@@ -6,6 +6,8 @@ const SingleInputForm = ({
   buttonName = "Send",
   placeholder = "Type here..",
 }) => {
+  // console.log("single input form rendered");
+
   return (
     <div className="d-flex align-items-end">
       {type === "textarea" ? (
