@@ -51,6 +51,15 @@ const AppDrawer = ({ children }) => {
             />
           </ListItemButton>
         </ListItem>
+
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemText
+              primary="Room"
+              onClick={() => router.push(AppRoutes.Chatroom)}
+            />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );

@@ -1,14 +1,14 @@
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
 import { Provider } from "react-redux";
 import swal from "sweetalert";
 import Layout from "../components/Layout";
 import Loader from "../components/Loader";
 import store from "../store";
 import "../styles/globals.css";
+import { useSaveScrollPosition } from "../utils/hooks/scroll";
 
 axios.interceptors.request.use((req) => {
   req.headers = {
@@ -44,20 +44,7 @@ axios.interceptors.response.use(
 );
 
 function MyApp({ Component, pageProps }) {
-  const router = useRouter();
-
-  useEffect(() => {
-    // event listener to listen for window scroll events & keep track of current (scrollX, scrollY) position.
-    addEventListener(
-      "scroll",
-      () => {
-        if (scrollY > 0) {
-          sessionStorage.setItem(window.location.pathname, scrollY);
-        }
-      },
-      true
-    );
-  }, []); // -> [] renders only on first render, while no dependency array runs on every render
+  useSaveScrollPosition();
 
   return (
     <React.Fragment>

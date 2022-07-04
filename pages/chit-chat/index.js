@@ -8,7 +8,7 @@ import {
   fetchPosts,
   loadMore,
 } from "../../store/reducers/postsReducer";
-import { useScroll, useScrollHandler } from "../../utils/hooks/scroll";
+import { useScroll, useScrollBottomHandler } from "../../utils/hooks/scroll";
 
 const ChitChat = () => {
   // const router = useRouter();
@@ -17,8 +17,6 @@ const ChitChat = () => {
   const posts = useSelector((state) => state.posts.posts);
   useScroll();
   const postsStatus = useSelector((state) => state.posts.status);
-
-  const [postsToDisplay, setPostsToDisplay] = useState({});
   const [postBody, setPostBody] = useState("");
 
   useEffect(() => {
@@ -29,15 +27,11 @@ const ChitChat = () => {
     }
   }, [postsStatus, dispatch]);
 
-  useEffect(() => {
-    setPostsToDisplay(() => posts);
-  }, [posts]);
-
   // scrollHandler hook used to load more datas when scrolled at the bottom
   const fetchMore = () => {
     dispatch(loadMore());
   };
-  useScrollHandler(fetchMore);
+  useScrollBottomHandler(fetchMore);
 
   const createNewPost = () => {
     if (!postBody.trim()) {
@@ -57,7 +51,7 @@ const ChitChat = () => {
     </div>
   );
 
-  const postsGrid = Object.entries(postsToDisplay).map((entry) => (
+  const postsGrid = Object.entries(posts).map((entry) => (
     <div className="col-md-12" key={entry[0]}>
       <Post post={entry[1]} />
     </div>
@@ -66,7 +60,7 @@ const ChitChat = () => {
   return (
     <div className="row">
       {currentUser && singleInputForm}
-      {postsToDisplay && postsGrid}
+      {posts && postsGrid}
     </div>
   );
 };
