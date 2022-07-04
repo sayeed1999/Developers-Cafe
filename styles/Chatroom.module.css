@@ -1,10 +1,28 @@
 .roomlist {
-  background-color: rgb(234, 0, 255);
+  background-color: darkcyan;
   color: white;
-  height: 100%;
+  height: 85vh;
+  border: solid 2px darkcyan;
+  overflow-y: auto;
+  padding-top: 30px;
 }
 
 .room {
   background-color: #fff;
-  height: 100%;
+  height: 85vh;
+  overflow-y: auto;
+}
+
+.roomlistitem {
+  background-color: white;
+  margin: 10px 20px;
+  padding: 10px 20px;
+  color: teal;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.roomlistitem:hover {
+  background-color: aliceblue;
 }

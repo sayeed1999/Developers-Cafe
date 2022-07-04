@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../store/reducers/authReducer";
+import styles from "../styles/Layout.module.css";
 import AppDrawer from "./AppDrawer";
 
 const Layout = (props) => {
@@ -26,20 +27,7 @@ const Layout = (props) => {
         </div>
       )}
       <div style={{ height: "5vh" }}></div>
-      <div
-        style={{
-          backgroundColor: "#000",
-          color: "#fff",
-          width: "100%",
-          height: "5vh",
-          position: "fixed",
-          zIndex: "10",
-          bottom: "0",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <div className={styles.footer}>
         <span style={{ fontSize: "small" }}>
           Developed By:-{" "}
           <a
