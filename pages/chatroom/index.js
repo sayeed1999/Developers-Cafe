@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import styles from "../../styles/Chatroom.module.css";
 
 const Chatroom = () => {
   const [name, setName] = useState((Math.random() * 1000).toFixed(5));
@@ -36,9 +37,9 @@ const Chatroom = () => {
   };
 
   return (
-    <div>
-      <p>chatroom</p>
-      <button onClick={() => sendMessage()}>push message</button>
+    <div className="row">
+      <div className={`${styles.roomlist} col-md-3`}>rooms list</div>
+      <div className={`${styles.room} col-md-9`}>single room</div>
     </div>
   );
 };

@@ -1,0 +1,10 @@
+.roomlist {
+  background-color: rgb(234, 0, 255);
+  color: white;
+  height: 100%;
+}
+
+.room {
+  background-color: #fff;
+  height: 100%;
+}

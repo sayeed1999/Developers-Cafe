@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../store/reducers/authReducer";
@@ -5,6 +6,7 @@ import AppDrawer from "./AppDrawer";
 
 const Layout = (props) => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -14,18 +16,22 @@ const Layout = (props) => {
   return (
     <div>
       <AppDrawer />
-      <div className="row d-flex justify-content-center">
-        <div className="col-11 col-sm-9 col-md-7 col-lg-6">
-          {props.children}
+      {router.asPath.includes("/chatroom") ? (
+        props.children
+      ) : (
+        <div className="row d-flex justify-content-center">
+          <div className="col-11 col-sm-9 col-md-7 col-lg-6">
+            {props.children}
+          </div>
         </div>
-      </div>
-      <div style={{ height: "8vh" }}></div>
+      )}
+      <div style={{ height: "5vh" }}></div>
       <div
         style={{
           backgroundColor: "#000",
           color: "#fff",
           width: "100%",
-          height: "6vh",
+          height: "5vh",
           position: "fixed",
           zIndex: "10",
           bottom: "0",
@@ -34,7 +40,7 @@ const Layout = (props) => {
           alignItems: "center",
         }}
       >
-        <span style={{ fontWeight: "400", fontSize: "small" }}>
+        <span style={{ fontSize: "small" }}>
           Developed By:-{" "}
           <a
             href="https://www.facebook.com/mdsayeed.rahman"
