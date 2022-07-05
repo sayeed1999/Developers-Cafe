@@ -7,41 +7,57 @@ import styles from "../../../styles/Room.module.css";
 const ENDPOINT = process.env.NEXT_APP_API_URL;
 const socket = io(ENDPOINT);
 
-let dummyMessages = [
-  { user: "admin", text: "sayeed, welcome to the chat!" },
-  { user: "admin", text: "sayeed has joined the chat" },
-  { user: "admin", text: "sayeed has joined the chat" },
-  { user: "sayem11", text: "hi there!!!" },
-  { user: "sifat12", text: "how are you ................................." },
-  { user: "admin", text: "sayeed, welcome to the chat!" },
-  { user: "admin", text: "sayeed, welcome to the chat!" },
-  { user: "admin", text: "sayeed has joined the chat" },
-  { user: "admin", text: "sayeed has joined the chat" },
-  { user: "sayem11", text: "hi there!!!" },
-  { user: "sifat12", text: "how are you ................................." },
-  { user: "sayeed1999", text: "hoorah!!!" },
-  { user: "sifat12", text: "how are you ................................." },
-  {
-    user: "sayeed1999",
-    text: "asd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asd",
-  },
-  { user: "admin", text: "sayeed has left the chat" },
-];
+// let dummyMessages = [
+//   { user: "admin", text: "sayeed, welcome to the chat!" },
+//   { user: "admin", text: "sayeed has joined the chat" },
+//   { user: "admin", text: "sayeed has joined the chat" },
+//   { user: "sayem11", text: "hi there!!!" },
+//   { user: "sifat12", text: "how are you ................................." },
+//   { user: "sayeed1999", text: "hoorah!!!" },
+//   {
+//     user: "sayeed1999",
+//     text: "asd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asd",
+//   },
+//   { user: "admin", text: "sayeed has left the chat" },
+// ];
 
-const Room = ({ room }) => {
+const Room = () => {
   const router = useRouter();
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const name = currentUser?.username;
-  const [messages, setMessages] = useState(dummyMessages);
+  const name = currentUser?.username || "Anonymous user";
+  const [room, setRoom] = useState("");
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const bottomRef = createRef();
 
   useEffect(() => {
+    const handleTabClose = (event) => {
+      event.preventDefault();
+      // console.log("beforeunload event triggered");
+      socket.emit("leave", { room });
+      socket.off();
+
+      return (event.returnValue = "Are you sure you want to exit?");
+    };
+
+    window.addEventListener("beforeunload", handleTabClose);
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (router.asPath.includes("#")) {
+      setRoom(router.asPath.split("#")[1]);
+    }
+  }, [router.asPath]);
+
+  useEffect(() => {
+    setMessages([]);
     if (name && room) {
       socket.emit("join", { name, room }, (error) => {
         if (error) alert(error);
       });
-
       return () => {
         socket.emit("leave", { room });
         socket.off();
@@ -53,7 +69,7 @@ const Room = ({ room }) => {
     socket.on("message", (message) => {
       setMessages([...messages, message]);
     });
-  }, [messages]);
+  });
 
   useEffect(() => {
     scrollToBottom();
@@ -64,9 +80,7 @@ const Room = ({ room }) => {
   };
 
   const sendMessage = () => {
-    return;
-    const message = "This is a dummy message!";
-    socket.emit("sendMessage", message, (error) => {
+    socket.emit("sendMessage", newMessage, (error) => {
       if (error) alert(error);
     });
   };
@@ -83,7 +97,7 @@ const Room = ({ room }) => {
       className={
         m.user === "admin"
           ? styles.bot
-          : m.user === "sayeed1999"
+          : m.user === name
           ? styles.self
           : styles.other
       }

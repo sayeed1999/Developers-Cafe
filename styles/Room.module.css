@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: flex-end;
   line-height: 22px;
+  min-height: 100%;
 }
 
 .bot {
