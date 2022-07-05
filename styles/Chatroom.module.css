@@ -1,7 +1,7 @@
 .roomlist {
   background-color: darkcyan;
   color: white;
-  height: 85vh;
+  height: 82vh;
   border: solid 2px darkcyan;
   overflow-y: auto;
   padding-top: 30px;
@@ -9,7 +9,7 @@
 
 .room {
   background-color: #fff;
-  height: 85vh;
+  height: 82vh;
   overflow-y: auto;
 }
 
