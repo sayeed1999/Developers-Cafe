@@ -35,7 +35,7 @@ const AppNavBar = ({ toggleDrawer }) => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }} style={{ width: "100vw", zIndex: "999" }}>
+      <Box sx={{ flexGrow: 1 }} style={{ width: "100%", zIndex: "999" }}>
         <AppBar>
           <Toolbar>
             <IconButton

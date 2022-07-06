@@ -20,7 +20,8 @@ const Layout = (props) => {
       {router.asPath.includes("/chatroom") ? (
         props.children
       ) : (
-        <div className="row d-flex justify-content-center">
+        // i don't know why it works! but it works very good
+        <div className="d-flex justify-content-center">
           <div className="col-11 col-sm-9 col-md-7 col-lg-6">
             {props.children}
           </div>
