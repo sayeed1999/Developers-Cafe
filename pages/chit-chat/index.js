@@ -40,6 +40,8 @@ const ChitChat = () => {
     dispatch(createPost(postBody));
   };
 
+  const littleSpace = <div style={{ height: "15px" }}></div>;
+
   const singleInputForm = (
     <div className="col-md-12 my-2">
       <SingleInputForm
@@ -59,6 +61,7 @@ const ChitChat = () => {
 
   return (
     <div className="row">
+      {littleSpace}
       {currentUser && singleInputForm}
       {posts && postsGrid}
     </div>

@@ -50,6 +50,12 @@ function MyApp({ Component, pageProps }) {
     <React.Fragment>
       <Head>
         <title>Developer&apos;s Cafe, BD 🔥</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <Provider store={store}>
         <Loader />

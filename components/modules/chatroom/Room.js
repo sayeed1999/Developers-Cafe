@@ -24,7 +24,7 @@ const socket = io(ENDPOINT);
 const Room = () => {
   const router = useRouter();
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const name = currentUser?.username || "Anonymous user";
+  const name = (currentUser?.username || "Anonymous user").toLowerCase();
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -81,7 +81,8 @@ const Room = () => {
 
   const sendMessage = () => {
     socket.emit("sendMessage", newMessage, (error) => {
-      if (error) alert(error);
+      if (error) return alert(error);
+      setNewMessage("");
     });
   };
 
