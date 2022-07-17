@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "../../styles/Clock.module.css";
+import styles from "../../styles/Clock.module.scss";
 import Button from "./Button";
 
 const Clock = () => {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "../../../styles/ProductWrapper.module.css";
+import styles from "../../../styles/ProductWrapper.module.scss";
 
 const ProductWrapper = ({ children, productId }) => {
   return (

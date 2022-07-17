@@ -1,0 +1,30 @@
+@import "./partials/colors.scss";
+
+.roomlist {
+  background-color: $roomlistBackgroundColor;
+  color: $roomlistTextColor;
+  height: 82vh;
+  border: solid 2px $roomlistBackgroundColor;
+  overflow-y: auto;
+  padding-top: 30px;
+
+  .roomlistitem {
+    background-color: $roomlistitemBackgroundColor;
+    margin: 10px 20px;
+    padding: 10px 20px;
+    color: $roomlistitemTextColor;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: $roomlistitemBackgroundHoverColor;
+    }
+  }
+}
+
+.room {
+  background-color: $roomBackgroundColor;
+  height: 82vh;
+  overflow-y: auto;
+}

@@ -3,7 +3,7 @@ import { createRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import SingleInputForm from "../../../components/shared/SingleInputForm";
-import styles from "../../../styles/Room.module.css";
+import styles from "../../../styles/Room.module.scss";
 const ENDPOINT = process.env.NEXT_APP_API_URL;
 const socket = io(ENDPOINT);
 

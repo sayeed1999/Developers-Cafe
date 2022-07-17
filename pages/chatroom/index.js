@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Room from "../../components/modules/chatroom/Room";
 import AppRoutes from "../../constants/AppRoutes";
-import styles from "../../styles/Chatroom.module.css";
+import styles from "../../styles/Chatroom.module.scss";
 
 const Chatroom = () => {
   const router = useRouter();

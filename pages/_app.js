@@ -6,7 +6,7 @@ import swal from "sweetalert";
 import Layout from "../components/Layout";
 import Loader from "../components/Loader";
 import store from "../store";
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import { useSaveScrollPosition } from "../utils/hooks/scroll";
 
 axios.interceptors.request.use((req) => {
@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <React.Fragment>
       <Head>
-        <meta charset="utf-8" />
+        <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Developer&apos;s Cafe, BD 🔥</title>
         <link

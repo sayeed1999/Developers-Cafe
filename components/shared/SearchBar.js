@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import styles from "../../styles/SearchBar.module.css";
+import styles from "../../styles/SearchBar.module.scss";
 
 const SearchBar = ({ searchText, searchTextChange }) => {
   const dispatch = useDispatch();

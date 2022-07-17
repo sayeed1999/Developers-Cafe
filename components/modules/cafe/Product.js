@@ -1,4 +1,4 @@
-import styles from "../../../styles/Product.module.css";
+import styles from "../../../styles/Product.module.scss";
 
 /// 'Render-props pattern' used.
 const Product = ({ product, render }) => {
