@@ -165,6 +165,7 @@ const postsSlice = createSlice({
             case tapHeart:
             case commentOnPost:
               if (!action.payload.data) break;
+              const post = action.payload.data;
               const index = state.posts.findIndex((x) => x._id === post._id);
               state.posts[index] = post;
               break;
