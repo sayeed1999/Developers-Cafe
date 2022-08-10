@@ -70,7 +70,7 @@ const Post = ({ post }) => {
 };
 
 export default React.memo(Post);
-// improves performance since chitchat is rendering 4times
+// improves performance since newsfeed is rendering 4times
 // instead of once, but memo() is forcing Post to render only once..
 
 // without React.memo() on Post component,

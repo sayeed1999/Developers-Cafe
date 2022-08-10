@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
-import Post from "../../components/modules/chit-chat/Post";
+import Post from "../../components/modules/newsfeed/Post";
 import SingleInputForm from "../../components/shared/SingleInputForm";
 import {
   createPost,
@@ -10,7 +10,7 @@ import {
 } from "../../store/reducers/postsReducer";
 import { useScroll, useScrollBottomHandler } from "../../utils/hooks/scroll";
 
-const ChitChat = () => {
+const Newsfeed = () => {
   // const router = useRouter();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -53,6 +53,7 @@ const ChitChat = () => {
     </div>
   );
 
+  // console.log(posts)
   const postsGrid = Object.entries(posts).map((entry) => (
     <div className="col-md-12" key={entry[0]}>
       <Post post={entry[1]} />
@@ -68,4 +69,4 @@ const ChitChat = () => {
   );
 };
 
-export default ChitChat;
+export default Newsfeed;

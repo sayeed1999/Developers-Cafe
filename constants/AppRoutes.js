@@ -2,7 +2,7 @@ const AppRoutes = {
   Home: "/",
   Cafe: "/cafe",
   ProductDetail: "/cafe/product/:id",
-  ChitChat: "/chit-chat",
+  Newsfeed: "/newsfeed",
   Chatroom: "/chatroom",
   Signup: "/auth/signup",
   Login: "/auth/login",

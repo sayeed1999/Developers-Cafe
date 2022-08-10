@@ -37,8 +37,8 @@ const AppDrawer = ({ children }) => {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemText
-              primary="Chit-Chat"
-              onClick={() => router.push(AppRoutes.ChitChat)}
+              primary="Newsfeed"
+              onClick={() => router.push(AppRoutes.Newsfeed)}
             />
           </ListItemButton>
         </ListItem>

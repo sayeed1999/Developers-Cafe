@@ -30,7 +30,7 @@ const Login = () => {
         text: AppMsgs.LoggedIn,
         icon: "success",
       });
-      push(AppRoutes.ChitChat);
+      push(AppRoutes.Newsfeed);
     }
 
     dispatch(resetStatus());
