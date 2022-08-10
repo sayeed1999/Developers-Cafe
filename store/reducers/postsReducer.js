@@ -94,7 +94,6 @@ export const commentOnPost = createAsyncThunk(
       `${process.env.NEXT_APP_API_URL}/newsfeed/posts/${postId}/comments`,
       comment
     );
-    console.log(response.data);
     return response.data;
   }
 );
