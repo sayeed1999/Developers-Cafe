@@ -1,14 +1,25 @@
+import { Button as AntButton } from "antd";
 import React from "react";
 
-const Button = ({ children, onClick, className }) => {
+const Button = ({
+  style,
+  children,
+  onClick,
+  type = "primary",
+  size = "medium",
+  danger = false,
+  block = false,
+}) => {
   return (
-    <button
-      type="button"
-      className={`${className} btn btn-md btn-outline-success mt-2`}
-      onClick={() => onClick()}
+    <AntButton
+      size={size}
+      type={type}
+      danger={danger}
+      block={block}
+      onClick={onClick}
     >
       {children}
-    </button>
+    </AntButton>
   );
 };
 

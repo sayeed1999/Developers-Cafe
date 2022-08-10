@@ -15,14 +15,13 @@ const Layout = (props) => {
   }, []);
 
   return (
-    <div>
-      <AppDrawer />
+    <AppDrawer>
       {router.asPath.includes("/chatroom") ? (
         props.children
       ) : (
         // i don't know why it works! but it works very good
         <div className="d-flex justify-content-center">
-          <div className="col-11 col-sm-9 col-md-7 col-lg-6">
+          <div className="col-12 col-sm-10 col-md-8 col-lg-6">
             {props.children}
           </div>
         </div>
@@ -41,7 +40,7 @@ const Layout = (props) => {
           &copy; 2022
         </span>
       </div>
-    </div>
+    </AppDrawer>
   );
 };
 

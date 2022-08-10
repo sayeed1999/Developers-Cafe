@@ -61,7 +61,7 @@ const Newsfeed = () => {
   ));
 
   return (
-    <div className="row">
+    <div className="row" id="feedbox">
       {littleSpace}
       {currentUser && singleInputForm}
       {posts && postsGrid}

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Button from "../../components/shared/Button";
-import ButtonGroup from "../../components/shared/ButtonGroup";
 import CheckBoxInput from "../../components/shared/CheckBoxInput";
 import EmailInput from "../../components/shared/EmailInput";
 import Form from "../../components/shared/Form";
@@ -68,11 +67,11 @@ const Signup = () => {
           onChange={setConfirPassword}
         />
         <CheckBoxInput value={agree} onChange={setAgree}>
-          I agree to the terms & conditions
+          I agree to the terms &apos; conditions
         </CheckBoxInput>
-        <ButtonGroup>
-          <Button onClick={submit}>Submit</Button>
-        </ButtonGroup>
+        <Button onClick={submit} block={true}>
+          Submit
+        </Button>
         <p className="form-text text-center">
           Already have an account? <Link href={AppRoutes.Login}>Login</Link>{" "}
           instead.

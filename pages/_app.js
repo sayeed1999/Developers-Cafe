@@ -1,3 +1,4 @@
+import "antd/dist/antd.css";
 import axios from "axios";
 import Head from "next/head";
 import React from "react";

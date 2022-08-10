@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Button from "../../components/shared/Button";
-import ButtonGroup from "../../components/shared/ButtonGroup";
 import EmailInput from "../../components/shared/EmailInput";
 import Form from "../../components/shared/Form";
 import PasswordInput from "../../components/shared/PasswordInput";
@@ -53,9 +52,9 @@ const Login = () => {
           value={password}
           onChange={setPassword}
         />
-        <ButtonGroup>
-          <Button onClick={submit}>Submit</Button>
-        </ButtonGroup>
+        <Button onClick={() => submit()} block={true}>
+          Submit
+        </Button>
         <p className="form-text text-center">
           Don&apos;t have an account?{" "}
           <Link href={AppRoutes.Signup}>Signup</Link> instead.

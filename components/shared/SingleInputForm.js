@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 const SingleInputForm = ({
   state,
   setState,
@@ -27,13 +29,9 @@ const SingleInputForm = ({
         />
       )}
       <div className="px-1"></div>
-      <button
-        type="button"
-        className="btn btn-primary btn-sm"
-        onClick={() => onSubmit()}
-      >
+      <Button type="primary" onClick={() => onSubmit()}>
         {buttonName}
-      </button>
+      </Button>
     </div>
   );
 };
