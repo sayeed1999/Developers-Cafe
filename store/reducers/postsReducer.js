@@ -94,6 +94,7 @@ export const commentOnPost = createAsyncThunk(
       `${process.env.NEXT_APP_API_URL}/newsfeed/posts/${postId}/comments`,
       comment
     );
+    console.log(response.data);
     return response.data;
   }
 );
@@ -159,8 +160,8 @@ const postsSlice = createSlice({
               state.posts = [...state.posts, ...action.payload.data];
               break;
             case createPost:
-              if (!action.payload.data[0]) break;
-              state.posts.unshift(action.payload.data[0]);
+              if (!action.payload.data) break; // if post is undefined
+              state.posts.unshift(action.payload.data);
               break;
             case tapHeart:
             case commentOnPost:
