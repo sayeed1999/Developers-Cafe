@@ -1,12 +1,13 @@
-import { Card, CardContent, Typography } from "@mui/material";
+import { Typography } from "antd";
 import React from "react";
+const { Text } = Typography;
 
 const Comment = (props) => {
   // console.log("comment rendered");
   const { comment } = props;
 
   return (
-    <Card
+    <div
       style={{
         margin: "5px 0",
         backgroundColor: "#eee",
@@ -14,16 +15,12 @@ const Comment = (props) => {
       }}
       elevation={0}
     >
-      <CardContent>
-        <div className="d-flex justify-content-between align-items-center">
-          <Typography variant="overline">{comment.username}</Typography>
-          <Typography variant="subtitle2" color="text.secondary">
-            {comment.createdAt}
-          </Typography>
-        </div>
-        <Typography variant="body2">{comment.body}</Typography>
-      </CardContent>
-    </Card>
+      <div className="d-flex justify-content-between align-items-center">
+        <Text>{comment.username}</Text>
+        <Text type="secondary">{comment.createdAt.substr(0, 10)}</Text>
+      </div>
+      <Text>{comment.body}</Text>
+    </div>
   );
 };
 

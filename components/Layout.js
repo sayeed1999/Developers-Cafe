@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../store/reducers/authReducer";
-import styles from "../styles/Layout.module.scss";
+// import styles from "../styles/Layout.module.scss";
 import AppDrawer from "./AppDrawer";
 
 const Layout = (props) => {
@@ -26,8 +26,8 @@ const Layout = (props) => {
           </div>
         </div>
       )}
-      <div style={{ height: "5vh" }}></div>
-      <div className={styles.footer}>
+
+      {/* <div className={styles.footer}>
         <span style={{ fontSize: "small" }}>
           Developed By:-{" "}
           <a
@@ -39,7 +39,7 @@ const Layout = (props) => {
           </a>{" "}
           &copy; 2022
         </span>
-      </div>
+      </div> */}
     </AppDrawer>
   );
 };

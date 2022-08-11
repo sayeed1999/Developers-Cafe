@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Post from "../../components/modules/newsfeed/Post";
+import Button from "../../components/shared/Button";
 import SingleInputForm from "../../components/shared/SingleInputForm";
 import {
   createPost,
@@ -60,11 +61,26 @@ const Newsfeed = () => {
     </div>
   ));
 
+  const showMore = (
+    <div className="m-2 text-center">
+      <Button
+        type="primary"
+        size="large"
+        onClick={() => {
+          fetchMore();
+        }}
+      >
+        SHOW MORE
+      </Button>
+    </div>
+  );
+
   return (
     <div className="row" id="feedbox">
       {littleSpace}
       {currentUser && singleInputForm}
       {posts && postsGrid}
+      {showMore}
     </div>
   );
 };

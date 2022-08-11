@@ -1,5 +1,4 @@
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -14,14 +13,27 @@ export default function Loader() {
     setActive((_prev) => posts || auth);
   }, [posts, auth]);
 
+  if (!active) return <></>;
+
   return (
-    <div>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={active}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+    <div
+      style={{
+        zIndex: "999",
+        position: "fixed",
+        height: "100vh",
+        width: "100%",
+        background: "#00002040",
+      }}
+    >
+      <Spin
+        size="large"
+        style={{
+          position: "absolute",
+          top: "50vh",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
+        }}
+      />
     </div>
   );
 }

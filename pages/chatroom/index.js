@@ -1,5 +1,5 @@
-import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
+import { MenuFoldOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import { useRouter } from "next/router";
 import { createRef, useState } from "react";
 import Room from "../../components/modules/chatroom/Room";
@@ -14,8 +14,8 @@ const Chatroom = () => {
 
   const toggleMenu = () => {
     // toggle menu position from -150 to 0 and back
-    if (roomlistRef.current.style.top !== "-150px") {
-      roomlistRef.current.style.top = "-150px";
+    if (roomlistRef.current.style.top !== "-200px") {
+      roomlistRef.current.style.top = "-200px";
     } else {
       roomlistRef.current.style.top = "50px";
     }
@@ -36,9 +36,12 @@ const Chatroom = () => {
         </div>
       ))}
       <div className="text-center d-md-none">
-        <IconButton color="inherit" onClick={toggleMenu}>
-          <MenuIcon />
-        </IconButton>
+        <Button
+          type="primary"
+          shape="circle"
+          icon={<MenuFoldOutlined />}
+          onClick={() => toggleMenu()}
+        />
       </div>
     </>
   );

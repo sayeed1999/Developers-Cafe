@@ -1,10 +1,11 @@
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { Card, CardContent, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { tapHeart } from "../../../store/reducers/postsReducer";
 import Comments from "./Comments";
+
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { Button, Card, Typography } from "antd";
+const { Text, Link } = Typography;
 
 const Post = ({ post }) => {
   // console.log("post rendered");
@@ -13,37 +14,35 @@ const Post = ({ post }) => {
 
   const headerSection = (
     <div className="d-flex justify-content-between align-items-center">
-      <Typography variant="overline" color="text.secondary" gutterBottom>
-        {post.username ?? "Anonymous user"}
-      </Typography>
-      <Typography variant="subtitle2" color="text.secondary">
-        {post.createdAt?.substring(0, 10)}
-      </Typography>
+      <Text level={3}>{post.username ?? "Anonymous user"}</Text>
+      <Text type="secondary">{post.createdAt?.substring(0, 10)}</Text>
     </div>
   );
 
-  const bodySection = <Typography variant="body1">{post.body}</Typography>;
+  const bodySection = <Text>{post.body}</Text>;
 
   const footerSection = (
     <div className="mt-1 d-flex align-items-center">
-      <Typography variant="subtitle2">
-        <IconButton size="small" onClick={() => dispatch(tapHeart(post))}>
-          {post?.likes?.includes(currentUser?.userid) ? (
-            <FavoriteIcon style={{ fontSize: "22px", color: "brown" }} />
+      <Button
+        danger
+        shape="circle"
+        style={{ border: "none" }}
+        icon={
+          post?.likes?.includes(currentUser?.userid) ? (
+            <HeartFilled />
           ) : (
-            <FavoriteBorderOutlinedIcon
-              style={{ fontSize: "22px", color: "brown" }}
-            />
-          )}
-        </IconButton>
-      </Typography>
-      <Typography variant="inherit" color="text.secondary">
+            <HeartOutlined />
+          )
+        }
+        onClick={() => dispatch(tapHeart(post))}
+      />
+      <Text type="secondary">
         <small>
           {post?.likes?.includes(currentUser?.userid)
             ? `You and ${post?.likes?.length - 1} others`
             : `${post?.likes?.length} others`}
         </small>
-      </Typography>
+      </Text>
     </div>
   );
 
@@ -55,14 +54,12 @@ const Post = ({ post }) => {
   return (
     <>
       {post && (
-        <Card sx={{ minWidth: 275 }} className="my-1" elevation={1}>
-          <CardContent>
-            {headerSection}
-            {bodySection}
-            {footerSection}
-            {horizontalRow}
-            {commentsSection}
-          </CardContent>
+        <Card style={{ marginBottom: "20px" }}>
+          {headerSection}
+          {bodySection}
+          {footerSection}
+          {horizontalRow}
+          {commentsSection}
         </Card>
       )}
     </>

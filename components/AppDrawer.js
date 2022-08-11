@@ -10,7 +10,7 @@ import {
 import { Layout, Menu } from "antd";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppRoutes from "../constants/AppRoutes";
 import { logout } from "../store/reducers/authReducer";
 import Button from "./shared/Button";
@@ -39,6 +39,7 @@ const items = [
 
 const AppDrawer = ({ children }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const currentUser = useSelector((state) => state.auth.currentUser);
 
@@ -94,7 +95,7 @@ const AppDrawer = ({ children }) => {
             </Button>
           )}
           {currentUser && (
-            <Button type="link" size="large" onClick={() => logout()}>
+            <Button type="link" size="large" onClick={() => dispatch(logout())}>
               Logout
             </Button>
           )}
@@ -103,14 +104,16 @@ const AppDrawer = ({ children }) => {
       <Layout.Content>
         <Layout style={{ height: "100%", overflowY: "hidden" }}>
           <Layout.Sider collapsed={collapsed}>
-            <Menu mode="inline" theme="dark">
+            <Menu mode="inline" theme="light">
               {items.map((item) =>
                 item.children ? subMenuItem(item) : menuItem(item)
               )}
             </Menu>
           </Layout.Sider>
           <Layout.Content>
-            <Layout style={{ height: "100%", overflowY: "auto" }}>
+            <Layout
+              style={{ height: "100%", overflowY: "auto", padding: "5px" }}
+            >
               {children}
             </Layout>
           </Layout.Content>

@@ -1,6 +1,5 @@
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { IconButton } from "@mui/material";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { commentOnPost } from "../../../store/reducers/postsReducer";
@@ -30,9 +29,12 @@ const Comments = ({ comments, postId }) => {
       <strong>
         <small>Comments</small>
       </strong>
-      <IconButton size="small" onClick={() => setHideComments((prev) => !prev)}>
-        {hideComments ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-      </IconButton>
+      <Button
+        shape="circle"
+        size="small"
+        icon={hideComments ? <ArrowDownOutlined /> : <ArrowUpOutlined />}
+        onClick={() => setHideComments((prev) => !prev)}
+      />
     </>
   );
 
