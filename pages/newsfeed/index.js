@@ -1,3 +1,4 @@
+import { Radio } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
@@ -9,7 +10,8 @@ import {
   fetchPosts,
   loadMore,
 } from "../../store/reducers/postsReducer";
-import { useScroll, useScrollBottomHandler } from "../../utils/hooks/scroll";
+import { PostCategoryEnum } from "../../utils/enums/global-enum";
+import { useScroll } from "../../utils/hooks/scroll";
 
 const Newsfeed = () => {
   // const router = useRouter();
@@ -18,6 +20,8 @@ const Newsfeed = () => {
   const posts = useSelector((state) => state.posts.posts);
   useScroll();
   const postsStatus = useSelector((state) => state.posts.status);
+  // new post form fields...
+  const [category, setCategory] = useState(PostCategoryEnum.text);
   const [postBody, setPostBody] = useState("");
 
   useEffect(() => {
@@ -32,19 +36,35 @@ const Newsfeed = () => {
   const fetchMore = () => {
     dispatch(loadMore());
   };
-  useScrollBottomHandler(fetchMore);
+  // useScrollBottomHandler(fetchMore); // not working on current layout
+
+  const onRadioChange = (event) => {
+    setCategory((prev) => event.target.value);
+  };
 
   const createNewPost = () => {
     if (!postBody.trim()) {
       return swal("Info", "Cannot post an empty post", "Info");
     }
-    dispatch(createPost(postBody));
+    dispatch(
+      createPost({
+        postBody,
+        category,
+      })
+    );
   };
 
   const littleSpace = <div style={{ height: "15px" }}></div>;
 
-  const singleInputForm = (
+  const form = (
     <div className="col-md-12 my-2">
+      <Radio.Group onChange={onRadioChange} value={category}>
+        {Object.keys(PostCategoryEnum).map((key) => (
+          <Radio key={key} value={PostCategoryEnum[key]}>
+            {key}
+          </Radio>
+        ))}
+      </Radio.Group>
       <SingleInputForm
         state={postBody}
         setState={setPostBody}
@@ -54,7 +74,6 @@ const Newsfeed = () => {
     </div>
   );
 
-  // console.log(posts)
   const postsGrid = Object.entries(posts).map((entry) => (
     <div className="col-md-12" key={entry[0]}>
       <Post post={entry[1]} />
@@ -63,13 +82,7 @@ const Newsfeed = () => {
 
   const showMore = (
     <div className="m-2 text-center">
-      <Button
-        type="primary"
-        size="large"
-        onClick={() => {
-          fetchMore();
-        }}
-      >
+      <Button type="primary" size="large" onClick={fetchMore}>
         SHOW MORE
       </Button>
     </div>
@@ -78,7 +91,7 @@ const Newsfeed = () => {
   return (
     <div className="row" id="feedbox">
       {littleSpace}
-      {currentUser && singleInputForm}
+      {currentUser && form}
       {posts && postsGrid}
       {showMore}
     </div>

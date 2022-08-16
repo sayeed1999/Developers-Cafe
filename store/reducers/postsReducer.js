@@ -46,7 +46,7 @@ export const fetchPostById = createAsyncThunk(
 
 export const createPost = createAsyncThunk(
   "posts/createOne",
-  async (postBody, { getState }) => {
+  async ({ postBody, category }, { getState }) => {
     const currentUser = getState().auth.currentUser;
     if (!currentUser) {
       return swal({
@@ -57,6 +57,7 @@ export const createPost = createAsyncThunk(
 
     let newPost = {};
     newPost.body = postBody;
+    newPost.category = category;
     newPost.likes = [];
     newPost.comments = [];
     newPost.userid = currentUser.userid;

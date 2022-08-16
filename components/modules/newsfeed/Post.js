@@ -1,10 +1,11 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { tapHeart } from "../../../store/reducers/postsReducer";
-import Comments from "./Comments";
-
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { Button, Card, Typography } from "antd";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import SyntaxHighter from "react-syntax-highlighter";
+import { tapHeart } from "../../../store/reducers/postsReducer";
+import { PostCategoryEnum } from "../../../utils/enums/global-enum";
+import Comments from "./Comments";
 const { Text, Link } = Typography;
 
 const Post = ({ post }) => {
@@ -19,7 +20,14 @@ const Post = ({ post }) => {
     </div>
   );
 
-  const bodySection = <Text>{post.body}</Text>;
+  const bodySection =
+    post.category === PostCategoryEnum.json ? (
+      <SyntaxHighter language={PostCategoryEnum.json} code={post.body} />
+    ) : post.category === PostCategoryEnum.sql ? (
+      <SyntaxHighter language={PostCategoryEnum.sql} code={post.body} />
+    ) : (
+      <Text> {post.body} </Text>
+    );
 
   const footerSection = (
     <div className="mt-1 d-flex align-items-center">
