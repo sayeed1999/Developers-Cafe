@@ -7,24 +7,10 @@ import styles from "../../../styles/Room.module.scss";
 const ENDPOINT = process.env.NEXT_APP_API_URL;
 const socket = io(ENDPOINT);
 
-// let dummyMessages = [
-//   { user: "admin", text: "sayeed, welcome to the chat!" },
-//   { user: "admin", text: "sayeed has joined the chat" },
-//   { user: "admin", text: "sayeed has joined the chat" },
-//   { user: "sayem11", text: "hi there!!!" },
-//   { user: "sifat12", text: "how are you ................................." },
-//   { user: "sayeed1999", text: "hoorah!!!" },
-//   {
-//     user: "sayeed1999",
-//     text: "asd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asdasd asd asd asd asd asd asd",
-//   },
-//   { user: "admin", text: "sayeed has left the chat" },
-// ];
-
 const Room = () => {
   const router = useRouter();
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const name = (currentUser?.username || "Anonymous user").toLowerCase();
+  const username = (currentUser?.username || "Anonymous user").toLowerCase();
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -54,8 +40,8 @@ const Room = () => {
 
   useEffect(() => {
     setMessages([]);
-    if (name && room) {
-      socket.emit("join", { name, room }, (error) => {
+    if (username && room) {
+      socket.emit("join", { username, room }, (error) => {
         if (error) alert(error);
       });
       return () => {
@@ -63,7 +49,7 @@ const Room = () => {
         socket.off();
       };
     }
-  }, [name, room]);
+  }, [username, room]);
 
   useEffect(() => {
     socket.on("message", (message) => {
@@ -98,7 +84,7 @@ const Room = () => {
       className={
         m.user === "admin"
           ? styles.bot
-          : m.user === name
+          : m.user === username
           ? styles.self
           : styles.other
       }
